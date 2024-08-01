@@ -1,0 +1,9 @@
+[submodule "tmux"]
+	path = tmux
+	url = https://github.com/Jorgedavyd/tmux-config.git
+[submodule "nvim"]
+	path = nvim
+	url = https://github.com/Jorgedavyd/nvim-config.git
+[submodule "scripts"]
+	path = scripts
+	url = https://github.com/Jorgedavyd/scripts.git
