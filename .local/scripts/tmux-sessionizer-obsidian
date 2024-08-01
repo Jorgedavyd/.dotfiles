@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+# Check if a directory argument is provided, otherwise use fzf to select a directory
+if [[ $# -eq 1 ]]; then
+    selected="$1"
+else
+    selected=$(find ~/OneDrive -type d | fzf)
+fi
+
+# Exit if no directory is selected
+if [[ -z "$selected" ]]; then
+    exit 0
+fi
+
+# Generate a session name from the selected directory
+selected_name=$(basename "$selected" | tr . _)
+tmux_running=$(pgrep tmux)
+
+# Create a new tmux session if not in tmux and no sessions are running
+if [[ -z "$TMUX" ]] && [[ -z "$tmux_running" ]]; then
+    tmux new-session -s "$selected_name" -c "$selected" -d
+    tmux send-keys -t "$selected_name" 'vi .' C-m
+    tmux attach-session -t "$selected_name"
+    exit 0
+fi
+
+# Create a new tmux session if it doesn't already exist
+if ! tmux has-session -t="$selected_name" 2> /dev/null; then
+    tmux new-session -ds "$selected_name" -c "$selected"
+    tmux send-keys -t "$selected_name" 'vi .' C-m
+fi
+
+# Switch to the selected tmux session
+tmux switch-client -t "$selected_name"
+

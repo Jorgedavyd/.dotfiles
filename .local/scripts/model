@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [[-z $1]]; then
+    DIRECTORY = $1
+else
+    DIRECTORY = "./model"
+
+mkdir -p $DIRECTORY
+
+cp -r ~/.local/scripts/default_sup_model/* $DIRECTORY
+
+chmod a+w $DIRECTORY/*
+
+echo "Directory './model' has been created and populated with default files."
