@@ -102,14 +102,9 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-. $HOME/cdf39_0-dist/bin/definitions.B
-export PATH="$PATH:/opt/mssql-tools18/bin"
-export PATH="$PATH:/usr/local/ssw"
-export PATH="$PATH:/usr/local/ssw/bin"
-export IDL_PATH="+/usr/local/ssw/gen:$IDL_PATH"
 
-export PATH=/usr/local/cuda-12.5/bin${PATH:+:${PATH}}
-export LD_LIBRARY_PATH=/usr/local/cuda-12.5/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}
+export LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 
 # PyTorch C++ Distribution
 export PATH=lib/libtorch/lib:$PATH
@@ -124,3 +119,8 @@ PATH="$PATH":"$HOME/.local/scripts/"
 bind -x '"\C-f":"tmux-sessionizer-env-projects"'
 bind -x '"\C-o":"tmux-sessionizer-obsidian"'
 
+if [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]]; then
+	exec startx
+fi
+
+alias vi='nvim'
