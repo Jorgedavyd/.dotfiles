@@ -117,7 +117,7 @@ export NVM_DIR="$HOME/.nvm"
 
 PATH="$PATH":"$HOME/.local/scripts/"
 bind -x '"\C-f":"tmux-sessionizer-env-projects"'
-bind -x '"\C-o":"tmux-sessionizer-obsidian"'
+bind -x '"\C-o":"tmux-sessionizer-pdf"'
 
 if [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]]; then
 	exec startx
