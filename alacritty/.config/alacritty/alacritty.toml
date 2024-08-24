@@ -14,4 +14,4 @@ normal = { family = "0xProtoNerdFont", style = "Regular"}
 bold = { family = "0xProtoNerdFont", style = "Bold"}
 italic = { family = "0xProtoNerdFont", style = "Italic"}
 bold_italic = { family = "0xProtoNerdFont", style = "Bold Italic"}
-size = 14.0
+size = 18.0

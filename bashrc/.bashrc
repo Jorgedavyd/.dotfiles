@@ -103,13 +103,13 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}
-export LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+export PATH=~/opt/cuda/bin${PATH:+:${PATH}}
+export LD_LIBRARY_PATH=~/opt/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 
 # PyTorch C++ Distribution
-export PATH=lib/libtorch/lib:$PATH
-export CPLUS_INCLUDE_PATH=lib/libtorch/include:$CPLUS_INCLUDE_PATH
-export LIBRARY_PATH=lib/libtorch/lib:$LIBRARY_PATH
+export PATH=~/lib/libtorch/lib:$PATH
+export CPLUS_INCLUDE_PATH=~/lib/libtorch/include:$CPLUS_INCLUDE_PATH
+export LIBRARY_PATH=~/lib/libtorch/lib:$LIBRARY_PATH
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
