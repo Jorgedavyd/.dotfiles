@@ -1,0 +1,11 @@
+#!/bin/bash
+
+setup () {
+    local TYPE="./"$1""
+    local DIRECTORY="./"$2""
+    local PROJECT_SCRIPT_PATH="$HOME/.local/scripts/workflows/"$TYPE""
+    mkdir -p $DIRECTORY
+    cp -r "$PROJECT_SCRIPT_PATH" "$DIRECTORY"
+    chmod a+w $DIRECTORY/*
+    echo "Directory '$DIRECTORY' has been created and populated with default files."
+}

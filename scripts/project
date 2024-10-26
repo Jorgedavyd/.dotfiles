@@ -1,0 +1,236 @@
+#!/bin/bash
+
+CONFIG_FILE="$HOME/project_config_for_current_path.yaml"
+ALLOWED_WORKFLOWS=("lightorch" "ml-arch" "fusion")
+ALLOWED_GH_ACTIONS=("cpp_ci" "python_ci" "pypi_cd" "rust_ci" "zig_ci")
+
+create_config() {
+    cat > "$CONFIG_FILE" << EOL
+PROJECT_NAME:
+WORKFLOWS:
+  -
+ACTIONS:
+  -
+DESCRIPTION:none
+LICENSE:none
+PUBLIC:false
+EOL
+    echo "Configuration file created at $CONFIG_FILE"
+    echo "Please edit the file with your desired configuration."
+    echo "Press any key to continue when you're done editing..."
+    read -n 1 -s
+}
+
+parse_config() {
+    PROJECT_NAME=$(yq eval '.PROJECT_NAME' "$CONFIG_FILE")
+    WORKFLOWS=$(yq eval '.TYPE' "$CONFIG_FILE")
+    ACTIONS=$(yq eval '.ACTIONS' "$CONFIG_FILE")
+    DESCRIPTION=$(yq eval '.DESCRIPTION' "$CONFIG_FILE")
+    LICENSE=$(yq eval '.LICENSE' "$CONFIG_FILE")
+    PUBLIC=$(yq eval '.PUBLIC' "$CONFIG_FILE")
+}
+
+assert () {
+    for item in "${WORKFLOWS[@]}"
+    do
+        flag=0
+        for allowed in "${ALLOWED_WORKFLOWS[@]}"
+        do
+            if [[ "$item" == "$allowed" ]]; then
+                flag=$((flag + 1))
+            fi
+        done
+        if [[ $flag -eq 0 ]]; then
+            echo "Invalid project workflow: $item"
+            exit 1
+        else
+            echo "Set up workflows for: $item"
+        fi
+    done
+    for item in "${ACTIONS[@]}"
+    do
+        flag=0
+        for allowed in "${ALLOWED_GH_ACTIONS[@]}"
+        do
+            if [[ "$item" == "$allowed" ]]; then
+                flag=$((flag + 1))
+            fi
+        done
+        if [[ $flag -eq 0 ]]; then
+            echo "Invalid github actions: $item"
+            exit 1
+        else
+            echo "Set up actions for: $item"
+        fi
+    done
+}
+
+setup_gh_actions () {
+    local target_path="$HOME/projects/"$PROJECT_NAME"/.github/workflows/"
+    mkdir -p "$target_path"
+    for val in "${ACTIONS[@]}"; do
+        cp "$HOME/.local/scripts/project_manager/workflows/"$val".yml" "$target_path"
+    done
+}
+
+get_repo_command () {
+    cmd_line=("gh repo create $PROJECT_NAME")
+
+    if [[ "$PUBLIC" == "true" ]]; then
+        cmd_line+=("--public")
+    elif [[ "$PUBLIC" == "false" ]]; then
+        cmd_line+=("--private")
+    else
+        echo "Not valid PUBLIC value. Should be boolean: [true, false]"
+        exit 1
+    fi
+
+    if [[ "$DESCRIPTION" != "none" && "$DESCRIPTION" != "false" ]]; then
+        cmd_line+=("--description" "$DESCRIPTION")
+    fi
+
+    if [[ "$LICENSE" != "none" ]]; then
+        cmd_line+=("--license" "$LICENSE")
+    fi
+
+    echo "${cmd_line[@]}"
+}
+
+contact () {
+cat << EOF
+## Contact
+
+- [Linkedin](https://www.linkedin.com/in/jorge-david-enciso-mart%C3%ADnez-149977265/)
+- Email: jorged.encyso@gmail.com
+- [GitHub](https://github.com/Jorgedavyd)
+EOF
+}
+
+citation () {
+local year=`date '+%Y'`
+cat << EOF
+## Citation
+
+```
+@misc{"$PROJECT_NAME",
+  author = {Jorge Enciso},
+  title = {"$PROJECT_NAME",
+  howpublished = {\url{https://github.com/Jorgedavyd/"$PROJECT_NAME"}},
+  year = {"$year"}
+}
+```
+EOF
+}
+
+license_f_string () {
+    local license="$1"
+    local color="$2"
+    local url="$3"
+    echo "[![License](https://img.shields.io/badge/License-"$license"-"$color".svg)]("$url")"
+}
+
+get_license () {
+    if [[ "$LICENSE" != none ]]; then
+        case "${LICENSE,,}" in
+            "mit")
+                license_f_string "MIT" "yellow" "https://opensource.org/licenses/MIT"
+                return "MIT"
+                ;;
+            "apache")
+                license_f_string "Apache_2.0" "blue" "https://opensource.org/licenses/Apache-2.0"
+                return "Apache-2.0"
+                ;;
+            "gpl")
+                license_f_string "GPLv3" "blue" "https://opensource.org/licenses/gpl-3.0"
+                return "GPLv3"
+                ;;
+            "blaude")
+                license_f_string "BSD_3--Clause" "orange" "https://opensource.org/licenses/BSD-3-Clause"
+                return "BSD-3 Clause"
+                ;;
+        esac
+    else
+        :
+    fi
+}
+
+var_in_workflow () {
+    local var="$1"
+    for item in "$WORKFLOWS[@]"; do
+        if [[ "$item" == "$var" ]]; then
+            return true
+        fi
+    done
+    return false
+}
+
+license () {
+    local license="$1"
+cat << EOF
+## Citation
+# License
+
+This project is licensed under the "${license^^}" License - see the LICENSE file for details.
+```
+EOF
+}
+
+readme () {
+    if [[ "$var_in_workflow "pypi_cd"" == true ]]; then
+        echo "https://img.shields.io/pypi/v/"$PROJECT_NAME")](https://pypi.org/project/"$PROJECT_NAME""
+    fi
+
+    if [[ "$var_in_workflow "python_ci"" == true ]]; then
+        echo "[![code-style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)"
+        python3 -m venv "$HOME/projects/$PROJECT_NAME/env"
+    fi
+
+    license_name=$get_license_batch
+
+    for action in "$ACTIONS[@]"; do
+        local temp="https://github.com/Jorgedavyd/"$PROJECT_NAME"/actions/workflows/"$action".yml"
+        echo "[![CI-CD]("$temp"/badge.svg)]("$temp")"
+    done
+
+    echo "# "$PROJECT_NAME""
+    echo "$DESCRIPTION"
+
+    if [[ "$license" != "none" ]]; then
+        license "$license_name"
+    fi
+    citation
+    contact
+}
+
+setup_readme () {
+    local readme_path="$HOME/projects/"$PROJECT_NAME"/README.md"
+    readme >> "$readme_path"
+}
+
+
+setup_files () {
+    source "$HOME/.local/scripts/project_manager/general_workflow"
+    for val in "${WORKFLOWS[@]}"; do
+        setup "$val" "$HOME/projects/"$PROJECT_NAME""
+    done
+    setup_readme
+}
+
+
+setup_repository () {
+    create_config
+    parse_config
+    rm -f "$CONFIG_FILE"
+    assert
+    command=$(get_repo_command)
+    eval "$command"
+    setup_gh_actions
+    setup_files
+    git init
+    git add .
+    git commit -m "Initial commit"
+    git push origin main
+    echo "Project $PROJECT_NAME has been set up and linked to remote repository https://github.com/Jorgedavyd/$PROJECT_NAME."
+}
+
+setup_repository

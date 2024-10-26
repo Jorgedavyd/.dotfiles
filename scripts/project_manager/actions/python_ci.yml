@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    strategy:
+      matrix:
+        python-version: [ '3.9', '3.10', '3.11', '3.12']
+        include:
+          - python-version: '3.9'
+            commit: false
+          - python-version: '3.12'
+            commit: false
+          - python-version: '3.11'
+            commit: false
+          - python-version: '3.10'
+            commit: true
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Set up scripts
+        run: |
+          sudo chmod +x ./scripts/*.sh
+
+      - name: Install dependencies
+        run: |
+          sudo sh ./scripts/requirements.sh
+
+      - name: Run tests
+        run: |
+          sudo sh ./scripts/test.sh
+
+      - name: Commit to repo
+        if: matrix.commit == true
+        run: |
+          sudo sh ./scripts/autocommit.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
