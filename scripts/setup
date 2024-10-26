@@ -43,24 +43,20 @@ installDependencies() {
 
 link_dotfiles() {
   mkdir -p "$HOME/.config"
-  ln -sf "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
-  ln -sf "$DOTFILES_DIR/nvim" "$HOME/.config/nvim"
-  ln -sf "$DOTFILES_DIR/alacritty" "$HOME/.config/alacritty"
-  ln -sf "$DOTFILES_DIR/tmux" "$HOME/.config/tmux"
-  ln -sf "$DOTFILES_DIR/i3" "$HOME/.config/i3"
-  ln -sf "$DOTFILES_DIR/scripts" "$HOME/.local/scripts"
-  ln -sf "$DOTFILES_DIR/hypr" "$HOME/.config/hypr"
-  ln -sf "$DOTFILES_DIR/neofetch" "$HOME/.config/neofetch"
-  ln -sf "$DOTFILES_DIR/swaylock" "$HOME/.config/swaylock"
-  ln -sf "$DOTFILES_DIR/swww" "$HOME/.config/swww"
-  ln -sf "$DOTFILES_DIR/ags" "$HOME/.config/ags"
-  ln -sf "$DOTFILES_DIR/.xinitrc" "$HOME/.xinitrc"
+  ln -sf "$DOTFILES_DIR/.zshrc" "$HOME/"
+  ln -sf "$DOTFILES_DIR/nvim" "$HOME/.config/"
+  ln -sf "$DOTFILES_DIR/alacritty" "$HOME/.config/"
+  ln -sf "$DOTFILES_DIR/tmux" "$HOME/.config/"
+  ln -sf "$DOTFILES_DIR/i3" "$HOME/.config/"
+  ln -sf "$DOTFILES_DIR/scripts" "$HOME/.local/"
+  ln -sf "$DOTFILES_DIR/hypr" "$HOME/.config/"
+  ln -sf "$DOTFILES_DIR/neofetch" "$HOME/.config/"
+  ln -sf "$DOTFILES_DIR/swaylock" "$HOME/.config/"
+  ln -sf "$DOTFILES_DIR/swww" "$HOME/.config/"
+  ln -sf "$DOTFILES_DIR/ags" "$HOME/.config/"
+  ln -sf "$DOTFILES_DIR/.xinitrc" "$HOME/"
 }
 
-display_success_message() {
-  echo "Dotfiles have been set up successfully."
-  exit 0
-}
 
 main() {
   installDependencies
@@ -68,8 +64,6 @@ main() {
   chmod -R +x "$DOTFILES_DIR/scripts/"
   chmod +x "$HOME/.xinitrc"
   link_dotfiles
-  xinit
-  display_success_message
 }
 
 main

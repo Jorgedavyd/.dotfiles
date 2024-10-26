@@ -11,14 +11,6 @@ setopt HIST_IGNORE_DUPS
 HISTSIZE=1000
 SAVEHIST=2000
 
-setopt CHECK_WINSIZE
-
-autoload -U colors && colors
-if [[ -x /usr/bin/dircolors ]]; then
-    eval "$(dircolors -b ~/.dircolors)"
-    alias ls='ls --color=auto'
-fi
-
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
@@ -48,11 +40,6 @@ bindkey '^F' tmux-sessionizer-env-projects
 bindkey '^O' tmux-sessionizer-pdf
 bindkey '^S' project
 bindkey '^G' lazygit
-
-if [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]]; then
-    # exec startx
-    exec Hyprland
-fi
 
 alias vi='nvim'
 
