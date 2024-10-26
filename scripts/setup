@@ -3,62 +3,58 @@
 DOTFILES_REPO="https://github.com/Jorgedavyd/.dotfiles.git"
 DOTFILES_DIR="$HOME/.dotfiles"
 
-xinit() {
-  if [[ ! -f "$HOME/.xinitrc" ]]; then
-    echo "Creating .xinitrc file..."
-    echo -e "#!/bin/sh\nexec i3" > "$HOME/.xinitrc"
-    chmod +x "$HOME/.xinitrc"
+installDependencies() {
+  if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    if command -v apt-get &> /dev/null; then
+      sudo apt-get update
+      sudo apt-get install -y stow ripgrep wget tmux i3 sed nvtop
+      curl --proto '=https' --tlsv1.3 -sSf https://sh.rustup.rs | sh -s -- -y
+      source $HOME/.cargo/env
+      rustup default stable
+      cargo install alacritty
+      sudo apt-get install software-properties-common
+      sudo add-apt-repository -y ppa:neovim-ppa/stable
+      sudo apt-get update
+      sudo apt-get install -y neovim
+    elif command -v pacman &> /dev/null; then
+      sudo pacman -Syu --noconfirm stow ripgrep fzf tmux i3-wm neovim alacritty xorg sed nvtop
+      curl --proto '=https' --tlsv1.3 -sSf https://sh.rustup.rs | sh -s -- -y
+      source $HOME/.cargo/env
+      rustup default stable
+    elif command -v yum &> /dev/null; then
+      sudo yum install -y stow ripgrep tmux i3-wm neovim alacritty xorg fzf sed nvtop
+      curl --proto '=https' --tlsv1.3 -sSf https://sh.rustup.rs | sh -s -- -y
+      source $HOME/.cargo/env
+      rustup default stable
+    fi
+  elif [[ "$OSTYPE" == "darwin"* ]]; then
+    if ! command -v brew &> /dev/null; then
+      echo "Homebrew not found, installing..."
+      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fi
+    brew install stow ripgrep wget tmux i3 fzf sed nvtop
+    brew install --cask alacritty
+    brew install neovim
   else
-    echo ".xinitrc file already exists"
+    echo "Operating system not supported."
+    exit 1
   fi
 }
 
-installDependencies() {
-    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-      if command -v apt-get &> /dev/null; then
-        sudo apt-get update
-        sudo apt-get install -y stow ripgrep wget tmux i3 sed nvtop
-        wget --proto '=https' --tlsv1.3 -sSf https://sh.rustup.rs | sh
-        rustup default stable
-        cargo install alacritty
-        sudo apt-get install software-properties-common
-        sudo add-apt-repository ppa:neovim-ppa/stable
-        sudo apt-get update
-        sudo apt-get install neovim
-      elif command -v pacman &> /dev/null; then
-        sudo pacman -Syu --noconfirm stow ripgrep fzf tmux i3-wm neovim alacritty xorg sed nvtop
-        wget --proto '=https' --tlsv1.3 -sSf https://sh.rustup.rs | sh
-        rustup default stable
-      elif command -v yum &> /dev/null; then
-        sudo yum install -y stow ripgrep tmux i3-wm neovim alacritty xorg fzf sed nvtop
-        wget --proto '=https' --tlsv1.3 -sSf https://sh.rustup.rs | sh
-        rustup default stable
-      fi
-    elif [[ "$OSTYPE" == "darwin"* ]]; then
-      if ! command -v brew &> /dev/null; then
-        echo "Homebrew not found, installing..."
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-      fi
-      brew install stow ripgrep wget tmux i3 fzf sed nvtop
-      brew install --cask alacritty
-      brew install neovim
-    fi
-    else
-    echo "stow is already installed"
-}
-
 link_dotfiles() {
-  ln -s "$DOTFILES_DIR/zshrc/.zshrc" "$HOME/.zshrc"
-  ln -s "$DOTFILES_DIR/nvim" "$HOME/.config/nvim"
-  ln -s "$DOTFILES_DIR/alacritty" "$HOME/.config/alacritty"
-  ln -s "$DOTFILES_DIR/tmux" "$HOME/.config/tmux"
-  ln -s "$DOTFILES_DIR/i3" "$HOME/.config/i3"
-  ln -s "$DOTFILES_DIR/scripts" "$HOME/.local/scripts"
-  ln -s "$DOTFILES_DIR/hypr" "$HOME/.config/hypr"
-  ln -s "$DOTFILES_DIR/neofetch" "$HOME/.config/neofetch"
-  ln -s "$DOTFILES_DIR/swaylock" "$HOME/.config/swaylock"
-  ln -s "$DOTFILES_DIR/swww" "$HOME/.config/swww"
-  ln -s "$DOTFILES_DIR/ags" "$HOME/.config/ags"
+  mkdir -p "$HOME/.config"
+  ln -sf "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
+  ln -sf "$DOTFILES_DIR/nvim" "$HOME/.config/nvim"
+  ln -sf "$DOTFILES_DIR/alacritty" "$HOME/.config/alacritty"
+  ln -sf "$DOTFILES_DIR/tmux" "$HOME/.config/tmux"
+  ln -sf "$DOTFILES_DIR/i3" "$HOME/.config/i3"
+  ln -sf "$DOTFILES_DIR/scripts" "$HOME/.local/scripts"
+  ln -sf "$DOTFILES_DIR/hypr" "$HOME/.config/hypr"
+  ln -sf "$DOTFILES_DIR/neofetch" "$HOME/.config/neofetch"
+  ln -sf "$DOTFILES_DIR/swaylock" "$HOME/.config/swaylock"
+  ln -sf "$DOTFILES_DIR/swww" "$HOME/.config/swww"
+  ln -sf "$DOTFILES_DIR/ags" "$HOME/.config/ags"
+  ln -sf "$DOTFILES_DIR/.xinitrc" "$HOME/.xinitrc"
 }
 
 display_success_message() {
@@ -68,9 +64,9 @@ display_success_message() {
 
 main() {
   installDependencies
-  git clone "$DOTFILES_REPO" "$DOTFILES_DIR"
-  update_submodules
-  chmod --recursive +x $DOTFILES_DIR/scripts/*
+  git clone "$DOTFILES_REPO" "$DOTFILES_DIR" || { echo "Failed to clone dotfiles repo."; exit 1; }
+  chmod -R +x "$DOTFILES_DIR/scripts/"
+  chmod +x "$HOME/.xinitrc"
   link_dotfiles
   xinit
   display_success_message
