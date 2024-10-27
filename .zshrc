@@ -56,6 +56,9 @@ bindkey -s '^F' 'tmux-sessionizer-env-projects\n'
 bindkey -s '^O' 'tmux-sessionizer-pdf\n'
 bindkey -s '^S' 'project\n'
 bindkey -s '^G' 'lazygit\n'
+bindkey '^Y' autosuggest-accept
+# ZVM_VI_ESCAPE_BINDKEY='^C'
+
 
 if [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]]; then
     exec Hyprland
