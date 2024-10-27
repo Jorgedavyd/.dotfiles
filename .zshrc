@@ -21,7 +21,23 @@ if [[ -f ~/.bash_aliases ]]; then
     source ~/.bash_aliases
 fi
 
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-vi-mode)
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="robbyrussell"
+zstyle ':omz:update' mode auto
+
+plugins=(
+    git
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    zsh-vi-mode
+    docker
+    docker-compose
+    pip
+    python
+    tmux
+    z
+)
+source $ZSH/oh-my-zsh.sh
 
 export PATH=~/opt/cuda/bin${PATH:+:${PATH}}
 export LD_LIBRARY_PATH=~/opt/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
