@@ -14,7 +14,7 @@ SAVEHIST=2000
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
-
+alias vi='nvim'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history 1 | sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 if [[ -f ~/.bash_aliases ]]; then
@@ -36,10 +36,12 @@ export NVM_DIR="$HOME/.nvm"
 
 PATH="$PATH:$HOME/.local/scripts/"
 
-bindkey '^F' tmux-sessionizer-env-projects
-bindkey '^O' tmux-sessionizer-pdf
-bindkey '^S' project
-bindkey '^G' lazygit
+bindkey -s '^F' 'tmux-sessionizer-env-projects\n'
+bindkey -s '^O' 'tmux-sessionizer-pdf\n'
+bindkey -s '^S' 'project\n'
+bindkey -s '^G' 'lazygit\n'
 
-alias vi='nvim'
-
+if [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]]; then
+    exec Hyprland
+    #exec startx
+fi
