@@ -1,3 +1,20 @@
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="robbyrussell"
+
+plugins=(
+    git
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    zsh-vi-mode
+    docker
+    docker-compose
+    pip
+    python
+    tmux
+    z
+)
+source $ZSH/oh-my-zsh.sh
+
 case $- in
     *i*) ;;
       *) return;;
@@ -21,24 +38,6 @@ if [[ -f ~/.bash_aliases ]]; then
     source ~/.bash_aliases
 fi
 
-export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="robbyrussell"
-zstyle ':omz:update' mode auto
-
-plugins=(
-    git
-    zsh-autosuggestions
-    zsh-syntax-highlighting
-    zsh-vi-mode
-    docker
-    docker-compose
-    pip
-    python
-    tmux
-    z
-)
-source $ZSH/oh-my-zsh.sh
-
 export PATH=~/opt/cuda/bin${PATH:+:${PATH}}
 export LD_LIBRARY_PATH=~/opt/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 
@@ -47,8 +46,8 @@ export CPLUS_INCLUDE_PATH=~/lib/libtorch/include:$CPLUS_INCLUDE_PATH
 export LIBRARY_PATH=~/lib/libtorch/lib:$LIBRARY_PATH
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"  # Loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && source "$NVM_DIR/bash_completion"  # Loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && source "$NVM_DIR/bash_completion"
 
 PATH="$PATH:$HOME/.local/scripts/"
 
@@ -58,7 +57,6 @@ bindkey -s '^S' 'project\n'
 bindkey -s '^G' 'lazygit\n'
 bindkey '^Y' autosuggest-accept
 # ZVM_VI_ESCAPE_BINDKEY='^C'
-
 
 if [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]]; then
     exec Hyprland

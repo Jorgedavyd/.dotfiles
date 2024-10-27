@@ -54,7 +54,11 @@ link_dotfiles() {
   ln -sf "$DOTFILES_DIR/swaylock" "$HOME/.config/"
   ln -sf "$DOTFILES_DIR/swww" "$HOME/.config/"
   ln -sf "$DOTFILES_DIR/ags" "$HOME/.config/"
+  ln -sf "$DOTFILES_DIR/dunst" "$HOME/.config/"
+  ln -sf "$DOTFILES_DIR/rofi" "$HOME/.config/"
+  ln -sf "$DOTFILES_DIR/cava" "$HOME/.config/"
   ln -sf "$DOTFILES_DIR/.xinitrc" "$HOME/"
+  ln -sf "$DOTFILES_DIR/fonts" "$HOME/.local/share/"
 }
 
 
