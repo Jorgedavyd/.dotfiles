@@ -39,11 +39,18 @@ export NVM_DIR="$HOME/.nvm"
 
 PATH="$PATH:$HOME/.local/scripts/"
 
-bindkey -s '^F' 'tmux-sessionizer-env-projects\n'
-bindkey -s '^O' 'tmux-sessionizer-pdf\n'
-bindkey -s '^S' 'project\n'
-bindkey -s '^G' 'lazygit\n'
+bindkey -s '^F' 'tmux-sessionizer-env-projects^M'
+bindkey -s '^O' 'tmux-sessionizer-pdf^M'
+bindkey -s '^S' 'project^M'
+bindkey -s '^G' 'lazygiti^M'
 bindkey '^Y' autosuggest-accept
+
+bindkey -s '^E' 'source /data/env/bin/activate^M'
+
+bindkey -r '^H'
+bindkey -r '^J'
+bindkey -r '^K'
+bindkey -r '^L'
 
 if [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]]; then
     exec Hyprland
