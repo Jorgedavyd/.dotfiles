@@ -45,7 +45,7 @@ bindkey -s '^S' 'project^M'
 bindkey -s '^G' 'lazygiti^M'
 bindkey '^Y' autosuggest-accept
 
-bindkey -s '^E' 'source /data/env/bin/activate^M'
+bindkey -s '^E' 'source /data/env/bin/activate && clear^M'
 
 bindkey -r '^H'
 bindkey -r '^J'
