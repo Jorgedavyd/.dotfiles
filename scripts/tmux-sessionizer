@@ -1,15 +1,7 @@
 #!/usr/bin/env bash
 
-if [[ $# -eq 1 ]]; then
-    selected=$1
-else
-    selected=$(find ~/projects/ ~/.dotfiles/ ~/lib/ ~/projects/testMaster/ ~/projects/CJP/ ~/projects/fusion/ ~/projects/SpaceApps/ ~/projects/DDS.py/ -mindepth 1 -maxdepth 1 -type d | fzf)
-fi
-
-if [[ -z $selected ]]; then
-    exit 0
-fi
-
+[[ -z $1 ]] && selected=$(find ~/projects ~/.dotfiles -type d -name '*.git' ! -path '*tmux*' -exec dirname {} + | fzf) || selected="$1"
+[[ -z $selected || ! -d $selected ]] && exit 0
 selected_name=$(basename "$selected" | tr . _)
 tmux_running=$(pgrep tmux)
 

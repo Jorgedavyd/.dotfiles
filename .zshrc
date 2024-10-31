@@ -39,10 +39,10 @@ export NVM_DIR="$HOME/.nvm"
 
 PATH="$PATH:$HOME/.local/scripts/"
 
-bindkey -s '^F' 'tmux-sessionizer-env-projects^M'
-bindkey -s '^O' 'tmux-sessionizer-pdf^M'
+bindkey -s '^F' 'tmux-sessionizer^M'
+bindkey -s '^O' 'mupdf-fzf^M'
 bindkey -s '^S' 'project^M'
-bindkey -s '^G' 'lazygiti^M'
+bindkey -s '^G' 'lazygit^M'
 bindkey '^Y' autosuggest-accept
 
 bindkey -s '^E' 'source /data/env/bin/activate && clear^M'

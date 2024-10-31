@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+selected=$(find /data/OneDrive -type f -name "*.pdf" | fzf)
+[[ -z "$selected" ]] && exit 0 || mupdf "$selected"

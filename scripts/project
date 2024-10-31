@@ -42,7 +42,7 @@ parse_config() {
     if [[ ! -f "$CONFIG_FILE" ]]; then
         log_error "Configuration file not found: $CONFIG_FILE"
         exit 1
-    }
+    fi
 
     PROJECT_NAME=$(yq eval '.PROJECT_NAME' "$CONFIG_FILE")
     WORKFLOWS=($(yq eval '.WORKFLOWS[]' "$CONFIG_FILE"))
@@ -51,12 +51,7 @@ parse_config() {
     DESCRIPTION=$(yq eval '.DESCRIPTION' "$CONFIG_FILE")
     LICENSE=$(yq eval '.LICENSE' "$CONFIG_FILE")
     PUBLIC=$(yq eval '.PUBLIC' "$CONFIG_FILE")
-
-    if [[ -z "$PROJECT_NAME" ]]; then
-        log_error "PROJECT_NAME is required"
-        exit 1
-    fi
-    rm -f "$CONFIG_FILE"
+    [[ -z "$PROJECT_NAME" ]] && { log_error "PROJECT_NAME is required" ; exit 1 } || rm -f "$CONFIG_FILE"
 }
 
 assert() {
@@ -99,41 +94,41 @@ assert() {
     fi
 
     if (( ${#invalid_precommits[@]} > 0 )); then
-        log_error "Invalid actions found: ${invalid_actions[*]}"
+        log_error "Invalid pre-commits found: ${invalid_precommits[*]}"
         exit 1
     fi
 }
 
 setup_gh_actions() {
-    if [[ -z "$ACTIONS" ]]; then
-        local target_path="$HOME/projects/$PROJECT_NAME/.github/workflows/"
-        mkdir -p "$target_path"
-        for val in "${ACTIONS[@]}"; do
-            local source_file="$HOME/.local/scripts/project_manager/workflows/$val.yml"
-            [[ -f "$source_file" ]] && cp "$source_file" "$target_path" || log_error "Workflow file not found: $source_file" ; exit 1
-        done
-    fi
+    local target_path="$HOME/projects/$PROJECT_NAME/.github/workflows/"
+    mkdir -p "$target_path"
+    for val in "${ACTIONS[@]}"; do
+        local source_file="$HOME/.local/scripts/project_manager/workflows/$val.yml"
+        if [[ -f "$source_file" ]]; then
+            cp "$source_file" "$target_path" || { log_error "Error copying workflow file: $source_file"; exit 1; }
+        else
+            log_error "Workflow file not found: $source_file"
+            exit 1
+        fi
+    done
 }
 
 setup_precommit() {
-    if [[ -z "$PRECOMMITS" ]]; then
-        local project_path="$HOME/projects/$PROJECT_NAME"
-        local pre_commit_file="$project_path/.pre-commit-config.yaml"
-        local base_pre_commit_dir="$HOME/.local/scripts/project_manager/pre-commits"
-        {
-            echo "repos:"
-            echo
-                for yaml_file in "$base_pre_commit_dir"/*.yml; do
-                    if [[ -f "$yaml_file" && " $PRECOMMITS " =~ $(basename "$yaml_file") ]]; then
-                        sed 's/^/  /' "$yaml_file"
-                        echo
-                    fi
-                done
-        } > "$pre_commit_file"
-        log_info "Pre-commit configuration file created at $pre_commit_file"
-        cd "$project_path" || exit
-        pre-commit install
-    fi
+    local project_path="$HOME/projects/$PROJECT_NAME"
+    local pre_commit_file="$project_path/.pre-commit-config.yaml"
+    local base_pre_commit_dir="$HOME/.local/scripts/project_manager/pre-commits"
+    {
+        echo "repos:"
+        for yaml_file in "$base_pre_commit_dir"/*.yml; do
+            if [[ -f "$yaml_file" && " ${PRECOMMITS[*]} " =~ $(basename "$yaml_file" .yml) ]]; then
+                sed 's/^/  /' "$yaml_file"
+                echo
+            fi
+        done
+    } > "$pre_commit_file"
+    log_info "Pre-commit configuration file created at $pre_commit_file"
+    cd "$project_path" || exit
+    pre-commit install
 }
 
 setup_repository() {
@@ -144,8 +139,8 @@ setup_repository() {
 
     local cmd_line=("gh" "repo" "create" "$PROJECT_NAME")
     [[ "$PUBLIC" == "true" ]] && cmd_line+=("--public") || cmd_line+=("--private")
-    [[ -z $DESCRIPTION ]] && cmd_line+=("--description" "$DESCRIPTION")
-    [[ -z $LICENSE ]] && cmd_line+=("--license" "$LICENSE")
+    [[ -n "$DESCRIPTION" ]] && cmd_line+=("--description" "$DESCRIPTION")
+    [[ -n "$LICENSE" ]] && cmd_line+=("--license" "$LICENSE")
 
     if ! "${cmd_line[@]}"; then
         log_error "Failed to create GitHub repository"
@@ -153,7 +148,6 @@ setup_repository() {
     fi
 
     setup_gh_actions
-    setup_files
     setup_precommit
 
     git init
