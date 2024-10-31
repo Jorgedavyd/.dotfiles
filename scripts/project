@@ -5,7 +5,8 @@ IFS=$'\n\t'
 
 readonly CONFIG_FILE="$HOME/project_config_for_current_path.yaml"
 readonly ALLOWED_WORKFLOWS=("lightorch" "ml-arch" "fusion")
-readonly ALLOWED_GH_ACTIONS=("cpp_ci" "python_ci" "pypi_cd" "rust_ci" "zig_ci")
+readonly ALLOWED_GH_ACTIONS=("cpp_ci" "python_ci" "pypi_cd" "rust_ci" "zig_ci" "lua_ci")
+readonly ALLOWED_PRECOMMITS=("c" "python" "rust" "zig" "lua")
 readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 log_info() { echo "[INFO] $*" >&2; }
@@ -25,25 +26,16 @@ check_dependencies() {
 }
 
 create_config() {
-    if [[ -f "$CONFIG_FILE" ]]; then
-        log_warning "Config file already exists. Creating backup."
-        mv "$CONFIG_FILE" "${CONFIG_FILE}.backup"
+    local base_config="$HOME/.local/scripts/project_manager/config.yml"
+    [[ -f "$CONFIG_FILE" ]] && rm -f "$CONFIG_FILE"
+    if [[ ! -f "$base_config" ]]; then
+        log_error "Couldn't find the default config.yml"
+        exit 1
+    else
+        cp "$base_config" "$CONFIG_FILE"
     fi
-
-    cat > "$CONFIG_FILE" << EOL
-PROJECT_NAME:
-WORKFLOWS:
-  -
-ACTIONS:
-  -
-DESCRIPTION: none
-LICENSE: none
-PUBLIC: false
-EOL
     log_info "Configuration file created at $CONFIG_FILE"
-    log_info "Please edit the file with your desired configuration."
-    log_info "Press any key to continue when you're done editing..."
-    read -n 1 -s
+    vim "$CONFIG_FILE" || nano "$CONFIG_FILE"
 }
 
 parse_config() {
@@ -55,6 +47,7 @@ parse_config() {
     PROJECT_NAME=$(yq eval '.PROJECT_NAME' "$CONFIG_FILE")
     WORKFLOWS=($(yq eval '.WORKFLOWS[]' "$CONFIG_FILE"))
     ACTIONS=($(yq eval '.ACTIONS[]' "$CONFIG_FILE"))
+    PRECOMMITS=($(yq eval '.PRECOMMITS[]' "$CONFIG_FILE"))
     DESCRIPTION=$(yq eval '.DESCRIPTION' "$CONFIG_FILE")
     LICENSE=$(yq eval '.LICENSE' "$CONFIG_FILE")
     PUBLIC=$(yq eval '.PUBLIC' "$CONFIG_FILE")
@@ -63,11 +56,13 @@ parse_config() {
         log_error "PROJECT_NAME is required"
         exit 1
     fi
+    rm -f "$CONFIG_FILE"
 }
 
 assert() {
     local invalid_workflows=()
     local invalid_actions=()
+    local invalid_precommits=()
 
     for item in "${WORKFLOWS[@]}"; do
         if [[ ! " ${ALLOWED_WORKFLOWS[*]} " =~ " ${item} " ]]; then
@@ -85,6 +80,14 @@ assert() {
         fi
     done
 
+    for item in "${PRECOMMITS[@]}"; do
+        if [[ ! " ${ALLOWED_PRECOMMITS[*]} " =~ " ${item} " ]]; then
+            invalid_precommits+=("$item")
+        else
+            log_info "Set up pre-commits for: $item"
+        fi
+    done
+
     if (( ${#invalid_workflows[@]} > 0 )); then
         log_error "Invalid workflows found: ${invalid_workflows[*]}"
         exit 1
@@ -94,69 +97,55 @@ assert() {
         log_error "Invalid actions found: ${invalid_actions[*]}"
         exit 1
     fi
+
+    if (( ${#invalid_precommits[@]} > 0 )); then
+        log_error "Invalid actions found: ${invalid_actions[*]}"
+        exit 1
+    fi
 }
 
 setup_gh_actions() {
-    local target_path="$HOME/projects/$PROJECT_NAME/.github/workflows/"
-    mkdir -p "$target_path"
-
-    for val in "${ACTIONS[@]}"; do
-        local source_file="$HOME/.local/scripts/project_manager/workflows/$val.yml"
-        if [[ ! -f "$source_file" ]]; then
-            log_error "Workflow file not found: $source_file"
-            exit 1
-        fi
-        cp "$source_file" "$target_path"
-    done
+    if [[ -z "$ACTIONS" ]]; then
+        local target_path="$HOME/projects/$PROJECT_NAME/.github/workflows/"
+        mkdir -p "$target_path"
+        for val in "${ACTIONS[@]}"; do
+            local source_file="$HOME/.local/scripts/project_manager/workflows/$val.yml"
+            [[ -f "$source_file" ]] && cp "$source_file" "$target_path" || log_error "Workflow file not found: $source_file" ; exit 1
+        done
+    fi
 }
 
 setup_precommit() {
-    local project_path="$HOME/projects/$PROJECT_NAME"
-    local pre_commit_file="$project_path/.pre-commit-config.yaml"
-    local base_pre_commit_dir="$HOME/.local/scripts/project_manager/pre-commits"
-
-    {
-        echo "repos:"
-
-        for yaml_file in "$base_pre_commit_dir"/*.yml; do
-            if [[ -f "$yaml_file" ]]; then
-                local repo=$(yq eval '.repo' "$yaml_file")
-                local rev=$(yq eval '.rev' "$yaml_file")
-
-                echo "  - repo: $repo"
-                echo "    rev: $rev"
-                echo "    hooks:"
-
-                yq eval '.hooks[]' "$yaml_file" | while IFS= read -r hook; do
-                    echo "      - id: $(echo "$hook" | yq eval '.id' -)"
-                    if [[ "$(echo "$hook" | yq eval 'has("args")' -)" == "true" ]]; then
-                        local args=$(echo "$hook" | yq eval '.args | join(", ")' -)
-                        echo "        args: [$args]"
-                    elif [[ "$(echo "$hook" | yq eval 'has("language_version")' -)" == "true" ]]; then
-                        local lang_ver=$(echo "$hook" | yq eval '.language_version' -)
-                        echo "        language_version: $lang_ver"
+    if [[ -z "$PRECOMMITS" ]]; then
+        local project_path="$HOME/projects/$PROJECT_NAME"
+        local pre_commit_file="$project_path/.pre-commit-config.yaml"
+        local base_pre_commit_dir="$HOME/.local/scripts/project_manager/pre-commits"
+        {
+            echo "repos:"
+            echo
+                for yaml_file in "$base_pre_commit_dir"/*.yml; do
+                    if [[ -f "$yaml_file" && " $PRECOMMITS " =~ $(basename "$yaml_file") ]]; then
+                        sed 's/^/  /' "$yaml_file"
+                        echo
                     fi
                 done
-                echo
-            fi
-        done
-    } > "$pre_commit_file"
-    log_info "Pre-commit configuration file created at $pre_commit_file"
-    cd "$project_path" || exit
-    pre-commit install
+        } > "$pre_commit_file"
+        log_info "Pre-commit configuration file created at $pre_commit_file"
+        cd "$project_path" || exit
+        pre-commit install
+    fi
 }
 
 setup_repository() {
     check_dependencies
     create_config
     parse_config
-    rm -f "$CONFIG_FILE"
     assert
 
     local cmd_line=("gh" "repo" "create" "$PROJECT_NAME")
     [[ "$PUBLIC" == "true" ]] && cmd_line+=("--public") || cmd_line+=("--private")
-    [[ "$DESCRIPTION" != "none" ]] && cmd_line+=("--description" "$DESCRIPTION")
-    [[ "$LICENSE" != "none" ]] && cmd_line+=("--license" "$LICENSE")
+    [[ -z $DESCRIPTION ]] && cmd_line+=("--description" "$DESCRIPTION")
+    [[ -z $LICENSE ]] && cmd_line+=("--license" "$LICENSE")
 
     if ! "${cmd_line[@]}"; then
         log_error "Failed to create GitHub repository"

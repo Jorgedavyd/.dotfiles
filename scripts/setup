@@ -65,7 +65,7 @@ link_dotfiles() {
 main() {
   installDependencies
   git clone "$DOTFILES_REPO" "$DOTFILES_DIR" || { echo "Failed to clone dotfiles repo."; exit 1; }
-  chmod -R +x "$DOTFILES_DIR/scripts/"
+  chmod +x "$DOTFILES_DIR/scripts/*"
   chmod +x "$HOME/.xinitrc"
   link_dotfiles
 }
