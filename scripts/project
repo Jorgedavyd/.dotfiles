@@ -146,10 +146,14 @@ setup_repository() {
         url="https://github.com/$name"
     fi
 
-    git clone "$url" "$HOME/projects/$name"
+    local pat="$HOME/projects/$name"
+    git clone "$url" "$pat"
     setup_workflow
     setup_actions
     setup_precommits
+    {
+        cd "$pat" && git add . && git commit -m "first commit" && git push origin main
+    }
 
     log_success "Project $name has been successfully set up"
 }
