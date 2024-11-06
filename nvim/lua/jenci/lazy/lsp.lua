@@ -162,6 +162,7 @@ return {
             history = false,
             updateevents = "TextChanged,TextChangedI",
         })
+        require("luasnip.loaders.from_snipmate").load({ paths = "~/.config/nvim/lua/jenci/lazy/snippets/latex" })
 
         -- Formatting and prettiness
         local lspkind = require("lspkind")
