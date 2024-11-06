@@ -11,7 +11,8 @@ return {
         "L3MON4D3/LuaSnip",
         "saadparwaiz1/cmp_luasnip",
         "j-hui/fidget.nvim",
-        "onsails/lspkind.nvim"
+        "onsails/lspkind.nvim",
+        "micangl/cmp-vimtex"
     },
     config = function()
         local cmp = require('cmp')
@@ -141,6 +142,7 @@ return {
                 { name = 'nvim_lsp' },
                 { name = 'luasnip' },
                 { name = 'buffer' },
+                { name = 'vimtex' },
             },
             mapping = {
                 ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
@@ -149,6 +151,9 @@ return {
                 ["<C-Space>"] = cmp.mapping.complete(),
             },
         })
+        --- bibtex for latex
+        require('cmp_vimtex').setup()
+
         --- Setup for SQL UI
         cmp.setup.filetype({"sql"}, {
             sources = {
