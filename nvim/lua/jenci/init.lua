@@ -52,6 +52,15 @@ autocmd('LspAttach', {
     end
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+    group = JenciGroup,
+    pattern = "tex",
+    callback = function()
+        vim.opt_local.wrap = true
+        vim.opt_local.linebreak = true
+    end,
+})
+
 vim.g.netrw_browse_split = 0
 vim.g.netrw_banner = 0
 vim.g.netrw_winsize = 25
