@@ -41,7 +41,7 @@ else
     exit 1
 fi
 
-name=$(yq ".PROJECT_NAME" "$CONFIG_FILE" | sed 's/"//g' | tr " " "-") || { log_error "Project name is required"; exit 1; }
+name=$(yq ".PROJECT_NAME" "$CONFIG_FILE" | sed 's/"//g' | tr " " "-" | tr "'" "-" | tr "\"" "-") || { log_error "Project name is required"; exit 1; }
 description=$(yq ".DESCRIPTION" "$CONFIG_FILE" | sed 's/"//g')
 public=$(yq ".PUBLIC" "$CONFIG_FILE" || echo "false")
 
