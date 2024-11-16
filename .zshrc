@@ -43,6 +43,7 @@ bindkey -s '^F' 'tmux-sessionizer^M'
 bindkey -s '^O' 'pdf-fzf^M'
 bindkey -s '^S' 'project^M'
 bindkey -s '^G' 'lazygit^M'
+bindkey -s '^T' 'tex-template-fzf^M'
 bindkey '^Y' autosuggest-accept
 
 bindkey -s '^E' 'source /data/env/bin/activate && clear^M'
