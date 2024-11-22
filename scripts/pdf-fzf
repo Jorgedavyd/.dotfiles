@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-selected=$(find ~/OneDrive -type f -name "*.pdf" | fzf)
+selected=$(find /data/OneDrive -type f -name "*.pdf" | fzf)
 [[ -z "$selected" ]] && exit 0 || zathura "$selected"
