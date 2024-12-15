@@ -1,28 +1,29 @@
 from sympy import Symbol
-import modulus
-from modulus.hydra import ModulusConfig
-from modulus.solver import Solver
-from modulus.domain import Domain
-from modulus.domain.constraint import (
+
+import modulus.sym
+from modulus.sym.hydra import ModulusConfig
+from modulus.sym.solver import Solver
+from modulus.sym.domain import Domain
+from modulus.sym.domain.constraint import (
     PointwiseBoundaryConstraint,
     PointwiseInteriorConstraint,
     IntegralBoundaryConstraint
 )
 from model import PhysicsInformedModel
 from equations import CustomPDE
-from modulus.key import Key
+from modulus.sym.key import Key
 
-from modulus.geometry.parametrization import Parametrization, Parameter
-from modulus.geometry.primitives_3d import Box, Sphere, Cylinder, Plane
-from modulus.geometry.primitives_2d import Rectangle, Circle, Line
-from modulus.geometry.primitives_1d import Point1D, Line1D
-from modulus.geometry.tessellation import Tessellation
-from modulus.utils.io.vtk import var_to_polyvtk
+from modulus.sym.geometry.parametrization import Parametrization, Parameter
+from modulus.sym.geometry.primitives_3d import Box, Sphere, Cylinder, Plane
+from modulus.sym.geometry.primitives_2d import Rectangle, Circle, Line
+from modulus.sym.geometry.primitives_1d import Point1D, Line1D
+from modulus.sym.geometry.tessellation import Tessellation
+from modulus.sym.utils.io.vtk import var_to_polyvtk
 
 def make_geometry():
     return ...
 
-@modulus.main(version_base = "1.3", config_path="conf", config_name="config")
+@modulus.sym.main(version_base = "1.3", config_path="conf", config_name="config")
 def run(cfg: ModulusConfig) -> None:
     r = Symbol("r") #sample inputs
     t = Symbol("t")

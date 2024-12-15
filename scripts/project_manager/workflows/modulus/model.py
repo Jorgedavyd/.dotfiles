@@ -1,6 +1,6 @@
 from modulus.sym.models.arch import Arch
-from modulus.key import Key
-from modulus.hydra import ModulusConfig
+from modulus.sym.key import Key
+from modulus.sym.hydra import ModulusConfig
 from lightorch.nn import DeepNeuralNetwork
 from typing import Dict
 import torch

@@ -22,9 +22,8 @@ training:
   max_steps: 10000
 
 batch_size:
-  TopWall: 1000
-  NoSlip: 1000
-  Interior: 4000
+  bc: 1000
+  pde: 1000
 
 graph:
   func_arch: true
