@@ -22,12 +22,6 @@ MODE_CURSOR_SEARCH="#fe8019 steady underline"
 MODE_CURSOR_VISUAL="$MODE_CURSOR_VICMD steady block"
 MODE_CURSOR_VLINE="$MODE_CURSOR_VISUAL #fe8019"
 
-#blue #458588
-#red #cc241d
-#green #98971a
-#aqua #689d6a
-#fg #ebdbb2
-
 source $ZSH/oh-my-zsh.sh
 
 setopt APPEND_HISTORY
