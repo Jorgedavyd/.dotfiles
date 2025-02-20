@@ -20,7 +20,10 @@ return {
             adapters = {
                 require("neotest-vitest"),
                 require("neotest-plenary"),
-                require("neotest-python"),
+                require("neotest-python")({
+                    runner = "pytest",
+                    python = "/usr/bin/python3.10",
+                }),
                 require("neotest-rust"),
                 require("neotest-zig"),
                 require("neotest-gtest"),
@@ -32,7 +35,6 @@ return {
                 end,
             }
         })
-
         local path = vim.fn.expand("%")
         -- General level
         vim.keymap.set("n", "<leader>ns", function()

@@ -1,10 +1,11 @@
 export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="robbyrussell"
+ZSH_THEME="gruvbox"
 
 plugins=(
     git
     zsh-autosuggestions
     zsh-syntax-highlighting
+    zsh-vim-mode
     docker
     docker-compose
     pip
@@ -12,6 +13,21 @@ plugins=(
     tmux
     z
 )
+
+VIM_MODE_VICMD_KEY='^C'
+MODE_CURSOR_VIINS="#fe8019 steady bar"
+MODE_CURSOR_REPLACE="$MODE_CURSOR_VIINS #fe8019"
+MODE_CURSOR_VICMD="#fe8019 steady block"
+MODE_CURSOR_SEARCH="#fe8019 steady underline"
+MODE_CURSOR_VISUAL="$MODE_CURSOR_VICMD steady block"
+MODE_CURSOR_VLINE="$MODE_CURSOR_VISUAL #fe8019"
+
+#blue #458588
+#red #cc241d
+#green #98971a
+#aqua #689d6a
+#fg #ebdbb2
+
 source $ZSH/oh-my-zsh.sh
 
 setopt APPEND_HISTORY

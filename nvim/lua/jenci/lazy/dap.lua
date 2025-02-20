@@ -16,7 +16,7 @@ return {
         local dap, dapui = require("dap"), require("dapui")
         dapui.setup({dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"}})
         require("mason-tool-installer").setup({ ensure_installed = {"codelldb", "debugpy", "delve"}})
-        require("dap-python").setup("/usr/bin/python3.12")
+        require("dap-python").setup("/usr/bin/python3.10")
         require("nvim-dap-virtual-text").setup({})
         dap.configurations.lua = {
             {
