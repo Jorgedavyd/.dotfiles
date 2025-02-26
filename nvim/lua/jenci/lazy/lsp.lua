@@ -7,6 +7,7 @@ return {
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-buffer",
         "folke/neodev.nvim",
+        "mfussenegger/nvim-jdtls",
         "hrsh7th/cmp-cmdline",
         "hrsh7th/nvim-cmp",
         "L3MON4D3/LuaSnip",
@@ -39,6 +40,7 @@ return {
                 "ltex",
                 "dockerls",
                 "docker_compose_language_service",
+                "jdtls",
             },
             handlers = {
                 function(server_name)
@@ -111,6 +113,68 @@ return {
                                 }
                             }
                         }
+                    })
+                end,
+
+                jdtls = function()
+                    local lspconfig = require("lspconfig")
+                    local jdtls = require("jdtls")
+                    local home = os.getenv("HOME")
+                    local workspace_dir = home .. "/.cache/jdtls/workspace/" .. vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
+
+                    -- Find the jdtls executable installed by Mason
+                    local mason_registry = require("mason-registry")
+                    local jdtls_pkg = mason_registry.get_package("jdtls")
+                    local jdtls_path = jdtls_pkg:get_install_path()
+                    local launcher = vim.fn.glob(jdtls_path .. "/plugins/org.eclipse.equinox.launcher_*.jar")
+                    local config_dir = jdtls_path .. "/config_" .. (vim.loop.os_uname().sysname == "Linux" and "linux" or "mac")
+
+                    lspconfig.jdtls.setup({
+                        capabilities = capabilities, -- Inherited from your outer config
+                        cmd = {
+                            "java",
+                            "-Declipse.application=org.eclipse.jdt.ls.core.id1",
+                            "-Dosgi.bundles.defaultStartLevel=4",
+                            "-Declipse.product=org.eclipse.jdt.ls.core.product",
+                            "-Dlog.protocol=true",
+                            "-Dlog.level=ALL",
+                            "-Xms1g",
+                            "--add-modules=ALL-SYSTEM",
+                            "--add-opens", "java.base/java.util=ALL-UNNAMED",
+                            "--add-opens", "java.base/java.lang=ALL-UNNAMED",
+                            "-jar", launcher,
+                            "-configuration", config_dir,
+                            "-data", workspace_dir,
+                        },
+                        root_dir = jdtls.setup.find_root({".git", "mvnw", "gradlew", "pom.xml", "build.gradle"}),
+                        settings = {
+                            java = {
+                                signatureHelp = { enabled = true },
+                                contentProvider = { preferred = "fernflower" }, -- Decompiler preference
+                                completion = {
+                                    favoriteStaticMembers = {
+                                        "org.junit.Assert.*",
+                                        "org.junit.Assume.*",
+                                        "org.junit.jupiter.api.Assertions.*",
+                                        "org.mockito.Mockito.*",
+                                    },
+                                },
+                                configuration = {
+                                    updateBuildConfiguration = "interactive",
+                                },
+                            },
+                        },
+                        init_options = {
+                            bundles = {},
+                        },
+                        handlers = {
+                            ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
+                            ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" }),
+                        },
+                        on_attach = function(client, bufnr)
+                            -- Enable jdtls-specific commands
+                            jdtls.setup_dap({ hotcodereplace = "auto" }) -- Optional: for debugging
+                        end,
                     })
                 end,
 

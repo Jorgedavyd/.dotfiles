@@ -11,7 +11,7 @@ return {
                 "markdown_inline", "vimdoc", "vim",
                 "zig", "toml", "sql", "csv", "cmake",
                 "cuda", "json", "make", "dockerfile", "haskell",
-                "xml"
+                "xml", "java"
             },
             sync_install = false,
             auto_install = true,
