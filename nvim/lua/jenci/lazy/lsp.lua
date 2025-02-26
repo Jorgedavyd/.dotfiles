@@ -6,6 +6,7 @@ return {
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-buffer",
+        "folke/neodev.nvim",
         "hrsh7th/cmp-cmdline",
         "hrsh7th/nvim-cmp",
         "L3MON4D3/LuaSnip",
@@ -14,6 +15,7 @@ return {
         "onsails/lspkind.nvim",
     },
     config = function()
+        require("neodev").setup({})
         local cmp = require('cmp')
         local cmp_lsp = require("cmp_nvim_lsp")
         local capabilities = vim.tbl_deep_extend(

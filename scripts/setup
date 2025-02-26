@@ -44,7 +44,7 @@ installDependencies() {
 link_dotfiles() {
   mkdir -p "$HOME/.config"
   ln -sf "$DOTFILES_DIR/zsh/.zshrc" "$HOME"
-  ln -sf "$DOTFILES_DIR/zsh/gruvbox.zsh-theme" "$ZSH/custom/themes/"
+  ln -sf "$DOTFILES_DIR/zsh/personalized.zsh-theme" "$ZSH/custom/themes/"
   ln -sf "$DOTFILES_DIR/nvim" "$HOME/.config/"
   ln -sf "$DOTFILES_DIR/alacritty" "$HOME/.config/"
   ln -sf "$DOTFILES_DIR/tmux" "$HOME/.config/"
