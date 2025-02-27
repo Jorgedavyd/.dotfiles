@@ -3,7 +3,7 @@ import { exec, execAsync, Variable } from 'astal'
 
 import MenuMode from './MenuMode'
 
-const wallpapers = exec(`bash -c "find -L ~/.config/swww -iname '*.png'"`)
+const wallpapers = exec(`bash -c "find -L ~/.config/swww -iname '*.png' -o -iname '*.jpg'"`)
   .split('\n')
   .map(path => ({
     name: path.split('/').pop(),
