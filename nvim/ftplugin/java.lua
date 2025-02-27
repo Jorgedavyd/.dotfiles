@@ -1,7 +1,7 @@
 local home = vim.env.HOME
 local jdtls = require("jdtls")
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
-local workspace_dir = home .. "/jdtls-workspace/" .. project_name
+local workspace_dir = home .. "/.cache/jdtls-workspace/" .. project_name
 local system_os = "linux"
 
 local bundles = {
