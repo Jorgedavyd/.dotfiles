@@ -11,6 +11,10 @@ return {
                     },
                 },
             },
+            {
+                "mfussenegger/nvim-jdtls",
+                ft = 'java',
+            },
             "williamboman/mason.nvim",
             "williamboman/mason-lspconfig.nvim",
             "WhoIsSethDaniel/mason-tool-installer.nvim",
