@@ -189,11 +189,11 @@ return {
                     completion = cmp.config.window.bordered()
                 },
                 sources = {
-                    { name = 'lazydev', group_index = 0 },
                     { name = 'nvim_lsp' },
                     { name = 'luasnip' },
                     { name = 'buffer' },
                     { name = 'vimtex' },
+                    { name = 'lazydev', group_index = 0 },
                 },
                 mapping = {
                     ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
