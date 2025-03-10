@@ -1,8 +1,5 @@
 import Hyprland from 'gi://AstalHyprland'
 import Mpris from 'gi://AstalMpris'
-
-import StatusLineDivider from '@widgets/StatusLineDivider'
-
 import { Gtk } from 'astal/gtk3'
 import { bind } from 'astal'
 
@@ -34,6 +31,7 @@ export default function NormalMode() {
             )
           })
         }}>
+
         <label
           name='tiling'
           className='tiling'
@@ -61,13 +59,6 @@ export default function NormalMode() {
           })
         }}
       />
-
-      <label
-        className='decoration'
-        label='[+]'
-      />
-
-      <StatusLineDivider />
 
       {bind(spotify, 'available').as(musicAvailable =>
         !musicAvailable
