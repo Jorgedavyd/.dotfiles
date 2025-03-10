@@ -78,12 +78,13 @@ return {
                     "clangd",
                     "cmake",
                     "sqlls",
-                    "pyright",
+                    "pylsp",
                     "zls",
                     "ltex",
                     "dockerls",
                     "docker_compose_language_service",
                     "jdtls",
+                    "yamlls"
                 },
 
                 handlers = {
@@ -130,7 +131,7 @@ return {
                         local lspconfig = require('lspconfig')
                         lspconfig.clangd.setup {
                             capabilities = capabilities,
-                            filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "h", "hpp" },
+                            filetypes = { "c", "cpp", "cuda", "cu"},
                             cmd = {
                                 "clangd",
                                 "--header-insertion=never",
@@ -141,9 +142,11 @@ return {
                             settings = {
                                 clangd = {
                                     fallbackFlags = {
-                                        "--cuda-path=/opt/cuda",
                                         "--std=c++20",
+                                        "--cuda-path=/opt/cuda",
                                         "--cuda-gpu-arch=sm_89",
+                                        "-L/opt/cuda/lib",
+                                        "-I/opt/cuda/include",
                                     },
                                 },
                             },
@@ -164,17 +167,43 @@ return {
                         })
                     end,
 
-                    pyright = function ()
+                    pylsp = function ()
                         local lspconfig = require("lspconfig")
-                        lspconfig.pyright.setup({
+                        lspconfig.pylsp.setup({
                             capabilities = capabilities,
                             settings = {
-                                python = {
-                                    analysis = {
-                                        typeCheckingMode = "basic",
-                                        autoSearchPaths = true,
-                                        useLibraryCodeForTypes = true
-                                    }
+                                pylsp = {
+                                    plugins = {
+                                        pyflakes = { enabled = false },
+                                        pycodestyle = { enabled = false },
+                                        autopep8 = { enabled = false },
+                                        yapf = { enabled = false },
+                                        mccabe = { enabled = false },
+                                        pylsp_mypy = { enabled = false },
+                                        pylsp_black = { enabled = false },
+                                        pylsp_isort = { enabled = false },
+                                    },
+                                },
+                            },
+                        })
+                    end,
+
+                    yamlls = function ()
+                        local lspconfig = require("lspconfig")
+                        lspconfig.yamlls.setup({
+                            settings = {
+                                yaml = {
+                                    schemas = {
+                                        ["kubernetes"] = "*.yaml",  -- Kubernetes manifests
+                                        ["https://raw.githubusercontent.com/SchemaStore/schemastore/refs/heads/master/src/schemas/json/github-workflow.json"] = ".github/workflows/*",  -- GitHub Workflows
+                                        ["https://raw.githubusercontent.com/SchemaStore/schemastore/refs/heads/master/src/schemas/json/github-action.json"] = ".github/action.{yml,yaml}",  -- GitHub Actions
+                                        ["http://json.schemastore.org/chart"] = "Chart.{yml,yaml}",  -- Helm Charts
+                                        ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "*docker-compose*.{yml,yaml}",  -- Docker Compose
+                                        ["https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json"] = "*flow*.{yml,yaml}",  -- Argo Workflows
+                                    },
+                                    validate = true,
+                                    hover = true,
+                                    completion = true
                                 }
                             }
                         })
