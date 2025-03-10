@@ -15,17 +15,26 @@
     }
     & .active_window {
       background-color: $bg3;
+      color: $primary;
       margin-left: 0px;
       margin-right: 8px;
       padding: 0 1rem;
     }
+    & .music_indicator {
+      color: $primary;
+      margin-left: 0px;
+    }
   }
 
   & .right {
-    & .decoration { padding-right: 2px; }
+    & .user {
+      background-color: $bg1;
+      color: $primary;
+    }
 
     & .time_indicator {
       background-color: $bg3;
+      color: $primary;
       margin-left: 8px;
       padding: 0 1rem;
     }
