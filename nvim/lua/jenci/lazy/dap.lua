@@ -56,7 +56,7 @@ return {
         -- Keymaps
         vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint)
         vim.keymap.set('n', '<leader>cB', dap.clear_breakpoints)
-        vim.keymap.set('n', '<leader>gb', dap.run_to_cursor)
+        -- vim.keymap.set('n', '<leader>gb', dap.run_to_cursor)
         vim.keymap.set('n', '<leader>cb', function ()
             vim.ui.input({prompt = "Condition: "}, function (condition)
                 dap.toggle_breakpoint(condition)
