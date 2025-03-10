@@ -1,5 +1,5 @@
 [window]
-opacity = 0.9
+opacity = 0.6
 
 padding.x = 0
 padding.y = 10
@@ -24,4 +24,3 @@ import = [
   # "~/.config/alacritty/gruvbox.toml"
   "~/.config/alacritty/kaganawa-dragon.toml"
 ]
-
