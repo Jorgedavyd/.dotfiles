@@ -6,11 +6,8 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 -- Movement
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
--- Look for the last pattern forward and backward
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
--- deletes buffer pasted?
-vim.keymap.set("x", "<leader>p", [["_dP]])
 -- Debugging
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
@@ -23,7 +20,14 @@ vim.keymap.set("n", "<leader>gh", "<cmd>silent !tmux neww actions<CR>")
 -- Search and change current word (PrimeAgen)
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 vim.keymap.set("v", "<leader>s", [[y:%s/<C-r>"/<C-r>"/gI<Left><Left><Left>]])
--- next greatest remap ever : asbjornHaland (PrimeAgen)
+-- maintains the last register
+vim.keymap.set("x", "<leader>p", [["_dP]])
 vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+--[[
+Personal favorite for ortholinear
+vim.keymap.set("v", "in", "ib")
+vim.keymap.set("v", "iN", "iB")
+vim.keymap.set("v", "i\", "i[")
+---]]

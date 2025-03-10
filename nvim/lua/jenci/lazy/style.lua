@@ -10,9 +10,9 @@ return {
             keywordStyle = { italic = true},
             statementStyle = { bold = true },
             typeStyle = {},
-            transparent = false,
+            transparent = true,
             dimInactive = false,
-            terminalColors = true,
+            terminalColors = false,
             colors = {
                 palette = {},
                 theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
@@ -20,9 +20,9 @@ return {
             overrides = function(colors)
                 return {}
             end,
-            theme = "wave",
+            theme = "dragon",
             background = {
-                dark = "wave",
+                dark = "dragon",
                 light = "lotus"
             },
         })
