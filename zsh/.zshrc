@@ -34,6 +34,7 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 alias vi='nvim'
+alias vp='nvvp -vm /usr/lib/jvm/java-8-openjdk/jre/bin/java'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history 1 | sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 [[ -f ~/.bash_aliases ]] && source ~/.bash_aliases
