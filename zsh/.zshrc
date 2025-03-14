@@ -41,9 +41,6 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 export PATH=~/opt/cuda/bin${PATH:+:${PATH}}
 export LD_LIBRARY_PATH=~/opt/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
-export PATH=~/lib/libtorch/lib:$PATH
-export CPLUS_INCLUDE_PATH=~/lib/libtorch/include:$CPLUS_INCLUDE_PATH
-export LIBRARY_PATH=~/lib/libtorch/lib:$LIBRARY_PATH
 
 export NVM_DIR="$HOME/.nvm"
 [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
