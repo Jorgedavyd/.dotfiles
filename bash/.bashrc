@@ -5,7 +5,7 @@ esac
 
 export OSH=~/.oh-my-bash
 
-OSH_THEME="font"
+OSH_THEME="rr"
 OMB_CASE_SENSITIVE="true"
 DISABLE_AUTO_UPDATE="true"
 OMB_USE_SUDO=false
@@ -45,12 +45,11 @@ shopt -s histappend
 
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
-## Bindings
-bind '"^F" "tmux-sessionizer^M"'
-bind '"^O" "pdf-fzf^M"'
-bind '"^S" "project^M"'
-bind '"^T" "tex-template-fzf^M"'
-bind '"^E" "source /data/env/bin/activate && clear^M"'
+bind -x '"\C-f": tmux-sessionizer'
+bind -x '"\C-o": pdf-fzf'
+bind -x '"\C-s": project'
+bind -x '"\C-t": tex-template-fzf'
+bind -x '"\C-e": source /data/env/bin/activate && clear'
 
 ## Aliases
 alias ll='ls -lah --color=auto'

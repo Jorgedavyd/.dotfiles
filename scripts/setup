@@ -99,7 +99,7 @@ installDependencies() {
 link_dotfiles() {
   mkdir -p "$HOME/.config"
   ln -sf "$DOTFILES_DIR/zsh/.zshrc" "$HOME"
-  sudo rm -f $HOME/.bashrc ; ln -sf "$DOTFILES_DIR/bash/.bashrc" "$HOME"
+  ln -sf "$DOTFILES_DIR/bash/.bashrc" "$HOME"
   ln -sf "$DOTFILES_DIR/bash/.bash_profile" "$HOME"
   ln -sf "$DOTFILES_DIR/nvim" "$HOME/.config/"
   ln -sf "$DOTFILES_DIR/alacritty" "$HOME/.config/"
@@ -115,7 +115,7 @@ link_dotfiles() {
   ln -sf "$DOTFILES_DIR/zathura" "$HOME/.config/"
   ln -sf "$DOTFILES_DIR/.xinitrc" "$HOME/"
   ln -sf "$DOTFILES_DIR/fonts" "$HOME/.local/share/"
-  cp "$DOTFILES_DIR/zsh/lambda-dragon.zsh-theme" "$HOME/.oh-my-zsh/custom/themes/"
+  ln -s "$DOTFILES_DIR/zsh/lambda-dragon.zsh-theme" "$HOME/.oh-my-zsh/custom/themes/"
 };
 
 main() {
