@@ -4,21 +4,13 @@ DOTFILES_REPO="https://github.com/Jorgedavyd/.dotfiles.git"
 DOTFILES_DIR="$HOME/.dotfiles"
 
 installBashEnv() {
-    ## install oh-my-bash and plugins & change to bash & source bash
     git clone https://github.com/ohmybash/oh-my-bash.git ~/.oh-my-bash
+    chsh -s /bin/bash
+    source $HOME/.bashrc
 };
 
 installTmuxEnv() {
-    ## install plugin manager & clone into target directory
     git clone https://github.com/tmux-plugins/tpm $HOME/.config/tmux/plugins
-};
-
-installSwaylock() {
-    git clone https://github.com/swaywm/swaylock.git $HOME/builds && cd $HOME/builds/swaylock
-    meson build
-    ninja -C build
-    sudo ninja -C build install;
-    ## move to path given the instructions
 };
 
 setupRust() {
@@ -35,19 +27,21 @@ installAGS() {
     go install -ldflags "\
         -X 'main.gtk4LayerShell=$(pkg-config --variable=libdir gtk4-layer-shell-0)/libgtk4-layer-shell.so' \
         -X 'main.astalGjs=$(pkg-config --variable=srcdir astal-gjs)'"
-    ## move to path
+    sudo mv $GOPATH/bin/ags /usr/bin/ags
 };
 
 installAlacritty() {
     git clone https://github.com/alacritty/alacritty.git $HOME/builds && cd $HOME/builds/alacritty
     cargo build --release --no-default-features --features=wayland
-    ## move to path
+    sudo mv target/release/alacritty /usr/local/bin
+    cp extra/completions/alacritty.bash ~/.bash_completion/alacritty
 };
 
 installSwww() {
     git clone https://github.com/LGFae/swww.git $HOME/builds && cd swww
     cargo build --release
-    ## move to path
+    sudo mv target/release/swww /usr/local/bin
+    sudo mv target/release/swww-daemon /usr/local/bin
 };
 
 installCava() {
@@ -56,7 +50,6 @@ installCava() {
     ./configure --prefix=/usr/local
     make
     sudo make install
-    ## already in path
 };
 
 installDependencies() {
@@ -77,7 +70,6 @@ installDependencies() {
             ## requirements for swww
             sudo apt-get update && sudo apt-get install -y python3 python3-pip
             pip install meson
-            ## requirements for swaylock
             ## install the per-repo programs
             sudo apt-get update && sudo apt-get upgrade -y
         elif command -v pacman &> /dev/null; then
@@ -87,7 +79,7 @@ installDependencies() {
             ## requirements for alacritty
             sudo pacman -Syu --noconfirm cmake freetype2 fontconfig pkg-config make libxcb libxkbcommon python
             ## requirements for swww
-            ## requirements for swaylock
+            sudo pacman -Syu --noconfirm python python-pip
         else
             echo "Not a valid package manager"
             exit 1

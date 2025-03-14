@@ -28,8 +28,15 @@ if [ "$DISPLAY" ] || [ "$SSH" ]; then
     plugins+=(tmux-autoattach)
 fi
 
+## oh-my-bash support
 source "$OSH"/oh-my-bash.sh
 
+## bash completion engines
+if [ -d "$HOME/.bash_completion" ]; then
+  for file in "$HOME/.bash_completion/"*; do
+    [ -f "$file" ] && source "$file"
+  done
+fi
 
 export HISTCONTROL=ignoredups:erasedups
 export HISTSIZE=10000
@@ -55,12 +62,12 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 # SSH and Compile flags
 export SSH_KEY_PATH="~/.ssh/rsa_id"
-
 export ARCHFLAGS="-arch x86_64"
 
 ## Vim as a life-style
 if [[ -n $SSH_CONNECTION ]]; then
     export EDITOR='vim'
+    alias vi='vim'
 else
     export EDITOR=nvim
     alias vi='nvim'
