@@ -21,7 +21,6 @@ completions=(
 plugins=(
   git
   bashmarks
-  tmux-autoattach
 )
 
 if [ "$DISPLAY" ] || [ "$SSH" ]; then
