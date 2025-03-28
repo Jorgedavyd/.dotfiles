@@ -84,7 +84,9 @@ return {
                     "dockerls",
                     "docker_compose_language_service",
                     "jdtls",
-                    "yamlls"
+                    "yamlls",
+                    "gopls",
+                    "regols"
                 },
 
                 handlers = {
