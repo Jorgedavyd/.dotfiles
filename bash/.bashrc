@@ -90,5 +90,13 @@ export NVM_DIR="$HOME/.nvm"
 [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
 [[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"
 
+# JAVA setup
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk
+export PATH=$JAVA_HOME/bin:$PATH
+
+# maven setup
+export MVN_HOME=/opt/apache-maven-3.9.4/
+export PATH=$MVN_HOME/bin:$PATH
+
 # Setting up scripts
 PATH="$PATH:$HOME/.local/scripts/"
