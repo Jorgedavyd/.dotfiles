@@ -71,6 +71,9 @@ else
     alias vi='nvim'
 fi
 
+# Cargo setup
+export PATH=$HOME/.cargo/bin:$PATH
+
 # CUDA setup
 export CUDA_PATH=/opt/cuda
 export PATH=$CUDA_PATH/bin:$PATH
