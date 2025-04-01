@@ -73,6 +73,8 @@ fi
 
 # Cargo setup
 export PATH=$HOME/.cargo/bin:$PATH
+# Zig setup
+export PATH=$HOME/.zig/build/stage3/bin:$PATH
 
 # CUDA setup
 export CUDA_PATH=/opt/cuda
