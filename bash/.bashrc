@@ -46,8 +46,6 @@ export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 bind -x '"\C-f": tmux-sessionizer'
 bind -x '"\C-o": pdf-fzf'
-bind -x '"\C-s": project'
-bind -x '"\C-t": tex-template-fzf'
 bind -x '"\C-e": source /data/env/bin/activate && clear'
 
 ## Aliases
@@ -57,6 +55,7 @@ alias grep='grep --color=auto'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history 1 | sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+alias tex-fzf='tex-template-fzf'
 
 # SSH and Compile flags
 export SSH_KEY_PATH="~/.ssh/rsa_id"
