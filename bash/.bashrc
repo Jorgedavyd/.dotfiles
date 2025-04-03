@@ -5,7 +5,7 @@ esac
 
 export OSH=~/.oh-my-bash
 
-OSH_THEME="pro"
+OSH_THEME="robbyrussell"
 OMB_CASE_SENSITIVE="true"
 DISABLE_AUTO_UPDATE="true"
 OMB_USE_SUDO=false
