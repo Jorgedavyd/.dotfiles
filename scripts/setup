@@ -9,16 +9,6 @@ installBashEnv() {
     source $HOME/.bashrc
 };
 
-installTmuxEnv() {
-    git clone https://github.com/tmux-plugins/tpm $HOME/.config/tmux/plugins
-};
-
-setupRust() {
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-    source $HOME/.cargo/env
-    rustup default stable
-};
-
 installAGS() {
     git clone https://github.com/aylur/astal $HOME/builds && cd $HOME/builds/astal/lang/gjs
     meson setup --prefix /usr build
@@ -28,13 +18,6 @@ installAGS() {
         -X 'main.gtk4LayerShell=$(pkg-config --variable=libdir gtk4-layer-shell-0)/libgtk4-layer-shell.so' \
         -X 'main.astalGjs=$(pkg-config --variable=srcdir astal-gjs)'"
     sudo mv $GOPATH/bin/ags /usr/bin/ags
-};
-
-installAlacritty() {
-    git clone https://github.com/alacritty/alacritty.git $HOME/builds && cd $HOME/builds/alacritty
-    cargo build --release --no-default-features --features=wayland
-    sudo mv target/release/alacritty /usr/local/bin
-    cp extra/completions/alacritty.bash ~/.bash_completion/alacritty
 };
 
 installSwww() {
@@ -73,10 +56,8 @@ installDependencies() {
             ## install the per-repo programs
             sudo apt-get update && sudo apt-get upgrade -y
         elif command -v pacman &> /dev/null; then
-            sudo pacman -Syu --noconfirm ripgrep fzf tmux neovim alacritty sed go hyrpland
+            sudo pacman -Syu --noconfirm ripgrep fzf tmux neovim sed go hyrpland
             ## requirements of cava
-            sudo pacman -Syu --noconfirm base-devel fftw alsa-lib iniparser pulseaudio pkgconf
-            ## requirements for alacritty
             sudo pacman -Syu --noconfirm cmake freetype2 fontconfig pkg-config make libxcb libxkbcommon python
             ## requirements for swww
             sudo pacman -Syu --noconfirm python python-pip
@@ -84,11 +65,10 @@ installDependencies() {
             echo "Not a valid package manager"
             exit 1
         fi
-        installAlacritty()
-        installAGS()
-        installSwww()
-        installCava()
-        installSwaylock()
+        installAGS
+        installSwww
+        installCava
+        installSwaylock
 
     else
         echo "Operating system not supported."
@@ -103,6 +83,7 @@ link_dotfiles() {
   ln -sf "$DOTFILES_DIR/bash/.bash_profile" "$HOME"
   ln -sf "$DOTFILES_DIR/nvim" "$HOME/.config/"
   ln -sf "$DOTFILES_DIR/alacritty" "$HOME/.config/"
+  ln -sf "$DOTFILES_DIR/ghostty" "$HOME/.config/"
   ln -sf "$DOTFILES_DIR/tmux" "$HOME/.config/"
   ln -sf "$DOTFILES_DIR/i3" "$HOME/.config/"
   ln -sf "$DOTFILES_DIR/scripts" "$HOME/.local/"
@@ -124,7 +105,6 @@ main() {
   chmod +x "$DOTFILES_DIR/scripts/*"
   chmod +x "$HOME/.xinitrc"
   link_dotfiles
-  installTmuxEnv
   installBashEnv
 }
 

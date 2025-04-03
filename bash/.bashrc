@@ -5,7 +5,7 @@ esac
 
 export OSH=~/.oh-my-bash
 
-OSH_THEME="rr"
+OSH_THEME="pro"
 OMB_CASE_SENSITIVE="true"
 DISABLE_AUTO_UPDATE="true"
 OMB_USE_SUDO=false
@@ -35,6 +35,11 @@ if [ -d "$HOME/.bash_completion" ]; then
   for file in "$HOME/.bash_completion/"*; do
     [ -f "$file" ] && source "$file"
   done
+fi
+
+## setting up auto-integration with bash
+if [ -n "${GHOSTTY_RESOURCES_DIR}" ]; then
+    builtin source "${GHOSTTY_RESOURCES_DIR}/shell-integration/bash/ghostty.bash"
 fi
 
 export HISTCONTROL=ignoredups:erasedups
@@ -74,6 +79,8 @@ fi
 export PATH=$HOME/.cargo/bin:$PATH
 # Zig setup
 export PATH=$HOME/.zig/build/stage3/bin:$PATH
+# Ghostty setup
+export PATH=$HOME/.ghostty/zig-out/bin:$PATH
 
 # CUDA setup
 export CUDA_PATH=/opt/cuda
