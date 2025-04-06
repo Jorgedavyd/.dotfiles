@@ -5,6 +5,6 @@ font-family = "IosevkaTerm NF"
 window-inherit-font-size = true
 font-size = 22
 
-background-opacity = 0.7
+background-opacity = 0.94
 window-padding-y = 10,0
 fullscreen = true
