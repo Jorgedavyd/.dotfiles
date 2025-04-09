@@ -4,7 +4,7 @@ return {
         as = "catppuccin",
         config = function()
             require("catppuccin").setup({
-                flavour = "frappe",
+                flavour = "macchiato",
                 term_colors = true,
                 integrations = {
                     cmp = true,

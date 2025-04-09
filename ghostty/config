@@ -1,7 +1,7 @@
-theme = catppuccin-frappe
+theme = rose-pine-moon
 shell-integration = bash
 
-font-family = "IosevkaTerm NF"
+font-family = "JetBrainsMono Nerd Font"
 window-inherit-font-size = true
 font-size = 22
 
