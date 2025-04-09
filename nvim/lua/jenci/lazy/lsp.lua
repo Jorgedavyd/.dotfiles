@@ -15,6 +15,11 @@ return {
                 "mfussenegger/nvim-jdtls",
                 ft = 'java',
             },
+            {
+                'mrcjkb/rustaceanvim',
+                version = '^6',
+                lazy = false,
+            },
             "williamboman/mason.nvim",
             "williamboman/mason-lspconfig.nvim",
             "WhoIsSethDaniel/mason-tool-installer.nvim",
@@ -91,7 +96,7 @@ return {
 
                 handlers = {
                     function(server_name)
-                        if server_name ~= 'jdtls' then
+                        if server_name ~= 'jdtls' and server_name ~= 'rust_analyzer' then
                             require("lspconfig")[server_name].setup {
                                 capabilities = capabilities
                             }
@@ -155,20 +160,6 @@ return {
                         }
                     end,
 
-                    rust_analyzer = function ()
-                        local lspconfig = require("lspconfig")
-                        lspconfig.rust_analyzer.setup({
-                            capabilities = capabilities,
-                            settings = {
-                                rust_analyzer = {
-                                    checkOnSave = {
-                                        command = 'clippy'
-                                    }
-                                }
-                            }
-                        })
-                    end,
-
                     pyright = function ()
                         local lspconfig = require("lspconfig")
                         lspconfig.pyright.setup({
@@ -184,6 +175,7 @@ return {
                             }
                         })
                     end,
+
                     yamlls = function ()
                         local lspconfig = require("lspconfig")
                         lspconfig.yamlls.setup({

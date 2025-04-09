@@ -29,9 +29,9 @@ return {
             callback({ type = "server", host = config.host or "127.0.0.1", port = config.port or 8086 })
         end
         -- C, C++, Rust, Zig, CUDA setup
-        dap.adapters.lldb = {
+        dap.adapters.codelldb = {
           type = 'executable',
-          command = vim.fn.resolve(vim.fn.stdpath("data") .. "/mason/bin/codelldb"),
+          command = vim.fn.resolve(vim.fn.stdpath("data") .. "/mason/packages/codelldb/adapter/codelldb"),
           name = 'lldb'
         }
         dap.configurations.cpp = {

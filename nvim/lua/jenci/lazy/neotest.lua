@@ -1,3 +1,5 @@
+local path = vim.fn.expand("%")
+
 return {
     "nvim-neotest/neotest",
     dependencies = {
@@ -6,8 +8,8 @@ return {
         "nvim-lua/plenary.nvim",
         "antoinemadec/FixCursorHold.nvim",
         "nvim-neotest/neotest-python",
+        "mrcjkb/rustaceanvim",
         "nvim-neotest/neotest-plenary",
-        "rouge8/neotest-rust",
         "marilari88/neotest-vitest",
         "lawrence-laz/neotest-zig",
         "alfaix/neotest-gtest",
@@ -24,7 +26,7 @@ return {
                     runner = "pytest",
                     python = "/usr/bin/python3.10",
                 }),
-                require("neotest-rust"),
+                require("rustaceanvim.neotest"),
                 require("neotest-zig"),
                 require("neotest-gtest"),
                 require("neotest-haskell"),
@@ -35,34 +37,39 @@ return {
                 end,
             }
         })
-        local path = vim.fn.expand("%")
-        -- General level
-        vim.keymap.set("n", "<leader>ns", function()
-            neotest.summary.toggle()
-        end)
-
-        vim.keymap.set("n", "<leader>rl", function()
-            neotest.run.run_last({strategy = 'dap'})
-        end)
-
-        vim.keymap.set("n", "<leader>nr", function()
-            neotest.run.run({strategy = 'dap'})
-        end)
-
-        vim.keymap.set("n", "<leader>no", function()
-            neotest.output.open({
-                enter = true,
-                last_run = true,
-                auto_close = true,
-            })
-        end)
-
-        -- Path level
-        vim.keymap.set("n", "<leader>nir", function()
-            neotest.run.run({
-                path,
-                strategy = 'dap'
-            })
-        end)
     end,
+    keys = {
+        {
+            "<leader>ns", function()
+                require("neotest").summary.toggle()
+            end
+        },
+        {
+            "<leader>rl", function()
+                require("neotest").run.run_last({strategy = 'dap'})
+            end
+        },
+        {
+            "<leader>nr", function()
+                require("neotest").run.run({strategy = 'dap'})
+            end
+        },
+        {
+            "<leader>no", function()
+                require("neotest").output.open({
+                    enter = true,
+                    last_run = true,
+                    auto_close = true,
+                })
+            end
+        },
+        {
+            "<leader>nir", function()
+                require("neotest").run.run({
+                    path,
+                    strategy = 'dap'
+                })
+            end
+        },
+    }
 }

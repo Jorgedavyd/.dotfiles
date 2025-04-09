@@ -1,8 +1,6 @@
 return {
     "nvim-telescope/telescope.nvim",
 
-    tag = "0.1.8",
-
     dependencies = {
         "nvim-lua/plenary.nvim"
     },
@@ -22,6 +20,12 @@ return {
                         ["<C-k>"] = "move_selection_previous",
                     },
                 },
+            },
+            pickers = {
+                colorscheme = {
+                    enable_preview = true,
+                    ignore_builtins = true
+                }
             }
         })
 
@@ -30,6 +34,7 @@ return {
 
         map('n', '<leader>pf', builtin.find_files, {})
         map('n', '<C-p>', builtin.git_files, {})
+        map('n', '<leader>w', builtin.colorscheme, {})
         map('n', '<leader>pws', function()
             builtin.grep_string({ search = vim.fn.expand("<cword>") })
         end)
