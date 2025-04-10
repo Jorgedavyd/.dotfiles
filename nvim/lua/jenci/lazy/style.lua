@@ -165,7 +165,7 @@ return {
                     -- end
                 end,
             })
-        vim.cmd("colorscheme catppuccin")
+        vim.cmd("colorscheme rose-pine")
         end
     }
 }
