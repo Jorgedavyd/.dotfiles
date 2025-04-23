@@ -19,6 +19,23 @@ return {
                 'mrcjkb/rustaceanvim',
                 version = '^6',
                 lazy = false,
+                ft = { "rust" },
+            },
+            {
+                'saecki/crates.nvim',
+                ft = {"toml"},
+                config = function()
+                    require("crates").setup {
+                        completion = {
+                            cmp = {
+                                enabled = true
+                            },
+                        },
+                    }
+                    require('cmp').setup.buffer({
+                        sources = { { name = "crates" }}
+                    })
+                end
             },
             "williamboman/mason.nvim",
             "williamboman/mason-lspconfig.nvim",
