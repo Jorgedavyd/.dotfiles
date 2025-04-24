@@ -83,8 +83,8 @@ return {
         as = "rose-pine",
         config = function ()
             require("rose-pine").setup({
-                variant = "moon", -- auto, main, moon, or dawn
-                dark_variant = "moon", -- main, moon, or dawn
+                variant = "moon",
+                dark_variant = "moon",
                 dim_inactive_windows = false,
                 extend_background_behind_borders = true,
 
@@ -130,13 +130,6 @@ return {
                     h5 = "pine",
                     h6 = "foam",
                 },
-                palette = {
-                    -- Override the builtin palette per variant
-                    -- moon = {
-                    --     base = '#18191a',
-                    --     overlay = '#363738',
-                    -- },
-                },
 
                 highlight_groups = {
                     TelescopeBorder = { fg = "overlay", bg = "overlay" },
@@ -152,18 +145,6 @@ return {
                     TelescopePromptNormal = { fg = "text", bg = "surface" },
                     TelescopePromptBorder = { fg = "surface", bg = "surface" },
                 },
-
-                before_highlight = function(group, highlight, palette)
-                    -- Disable all undercurls
-                    -- if highlight.undercurl then
-                    --     highlight.undercurl = false
-                    -- end
-                    --
-                    -- Change palette colour
-                    -- if highlight.fg == palette.pine then
-                    --     highlight.fg = palette.foam
-                    -- end
-                end,
             })
         vim.cmd("colorscheme rose-pine")
         end
