@@ -1,10 +1,10 @@
-theme = rose-pine-moon
+theme = rose-pine
 shell-integration = bash
 
-font-family = "JetBrainsMono Nerd Font"
+font-family = "IosevkaTerm Nerd Font"
 window-inherit-font-size = true
-font-size = 22
+font-size = 18
 
-background-opacity = 0.9
+background-opacity = 1
 window-padding-y = 10,0
 fullscreen = true
