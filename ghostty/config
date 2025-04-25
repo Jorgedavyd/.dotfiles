@@ -1,9 +1,9 @@
 theme = rose-pine-moon
 shell-integration = bash
 
-font-family = "SF Mono"
+font-family = "Liga SFMono Nerd Font"
 window-inherit-font-size = true
-font-size = 18
+font-size = 20
 
 background-opacity = 1
 window-padding-y = 10,0
