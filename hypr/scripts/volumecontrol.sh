@@ -18,27 +18,24 @@ cat << "EOF"
 EOF
 }
 
-function notify_vol
-{
-    vol=`pamixer $srce --get-volume | cat`
+function notify_vol {
+    vol=$(pamixer $srce --get-volume)
     angle="$(( (($vol+2)/5) * 5 ))"
     ico="${icodir}/vol-${angle}.svg"
     bar=$(seq -s "." $(($vol / 15)) | sed 's/[0-9]//g')
-    dunstify "t2" -a "$vol$bar" "$nsink" -i $ico -r 91190 -t 800
+    makoctl dismiss -n
+    notify-send -t 800 -i "$ico" "$nsink" "$vol$bar"
 }
 
-function notify_mute
-{
-    mute=`pamixer $srce --get-mute | cat`
-    if [ "$mute" == "true" ] ; then
-        dunstify "t2" -a "muted" "$nsink" -i ${icodir}/muted-${dvce}.svg -r 91190 -t 800
+function notify_mute {
+    mute=$(pamixer $srce --get-mute)
+    makoctl dismiss -n  # optional to clear last
+    if [ "$mute" == "true" ]; then
+        notify-send -t 800 -i "${icodir}/muted-${dvce}.svg" "$nsink" "Muted"
     else
-        dunstify "t2" -a "unmuted" "$nsink" -i ${icodir}/unmuted-${dvce}.svg -r 91190 -t 800
+        notify-send -t 800 -i "${icodir}/unmuted-${dvce}.svg" "$nsink" "Unmuted"
     fi
 }
-
-
-# set device source
 
 while getopts io SetSrc
 do
