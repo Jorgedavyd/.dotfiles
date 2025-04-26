@@ -40,6 +40,13 @@ elif [ -f "$WALLPAPERS_PATH/$theme/default.jpg" ]; then
     ln -sf "$WALLPAPERS_PATH/$theme/default.jpg" "$LOCAL_STATE/current_wallpaper"
 fi
 
+magick "$LOCAL_STATE/current_wallpaper" \
+  -gravity Center \
+  -crop 1:1 \
+  -resize 500x500 \
+  +repage \
+  "$LOCAL_STATE/current_wallpaper.crop"
+
 swww img "$LOCAL_STATE/current_wallpaper" \
     --transition-type "wipe" \
     --transition-duration 3

@@ -5,7 +5,7 @@ return {
         config = function()
             require("catppuccin").setup({
                 flavour = "macchiato",
-                term_colors = true,
+                term_colors = false,
                 integrations = {
                     cmp = true,
                     gitsigns = true,
@@ -62,7 +62,7 @@ return {
                 typeStyle = {},
                 transparent = true,
                 dimInactive = false,
-                terminalColors = true,
+                terminalColors = false,
                 colors = {
                     palette = {},
                     theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
@@ -98,13 +98,13 @@ return {
                 extend_background_behind_borders = true,
 
                 enable = {
-                    terminal = true,
+                    terminal = false,
                     legacy_highlights = true,
                     migrations = true,
                 },
 
                 styles = {
-                    bold = false,
+                    bold = true,
                     italic = false,
                     transparency = true,
                 },
@@ -129,7 +129,8 @@ return {
     {
         "nyoom-engineering/oxocarbon.nvim",
         config = function ()
-            vim.api.nvim_set_hl(0, "Italic", {fg = "NONE", bg = "NONE", italic = false})
+            local oxocarbon = require("oxocarbon").oxocarbon
+            vim.api.nvim_set_hl(0, "Italic", {fg = oxocarbon.none, bg = oxocarbon.none, italic = false})
             vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
             vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
             vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
@@ -140,7 +141,7 @@ return {
         config = function ()
             vim.g.nord_contrast = false
             vim.g.nord_borders = true
-            vim.g.nord_disable_background = false
+            vim.g.nord_disable_background = true
             vim.g.nord_italic = false
             vim.g.nord_uniform_diff_background = false
             vim.g.nord_bold = true
@@ -151,7 +152,7 @@ return {
         priority = 1000,
         config = function ()
             require("gruvbox").setup({
-                terminal_colors = true,
+                terminal_colors = false,
                 undercurl = true,
                 underline = true,
                 bold = false,
