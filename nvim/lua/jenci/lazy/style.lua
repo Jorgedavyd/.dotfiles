@@ -58,11 +58,11 @@ return {
                 commentStyle = { italic = false },
                 functionStyle = {},
                 keywordStyle = { italic = false },
-                statementStyle = { bold = false },
+                statementStyle = { bold = true },
                 typeStyle = {},
                 transparent = true,
                 dimInactive = false,
-                terminalColors = false,
+                terminalColors = true,
                 colors = {
                     palette = {},
                     theme = { wave = {}, lotus = {}, dragon = {}, all = {} },

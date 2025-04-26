@@ -12,7 +12,7 @@ LOCAL_STATE="$HOME/.local/state/theme"
 
 [[ ! -e "$LOCAL_STATE" ]] && mkdir "$LOCAL_STATE"
 
-ln -s "$WALLPAPERS_PATH/$DEFAULT_THEME" "$LOCAL_STATE/wallpapers"
+ln -sf "$WALLPAPERS_PATH/$DEFAULT_THEME" "$LOCAL_STATE/wallpapers"
 
 if [ -f "$WALLPAPERS_PATH/$DEFAULT_THEME/default.png" ]; then
     ln -sf "$WALLPAPERS_PATH/$DEFAULT_THEME/default.png" "$LOCAL_STATE/current_wallpaper"
@@ -27,8 +27,8 @@ magick "$LOCAL_STATE/current_wallpaper" \
   +repage \
   "$LOCAL_STATE/current_wallpaper.crop"
 
-ln -s "$HYPR_THEME/themes/$DEFAULT_THEME.conf" "$LOCAL_STATE/hypr_theme.conf"
-ln -s "$AGS_PATH/themes/$DEFAULT_THEME.scss" "$LOCAL_STATE/ags_theme.scss"
-ln -s "$AGS_PATH/assets/no_music/$DEFAULT_THEME.png" "$LOCAL_STATE/no_music"
+ln -sf "$HYPR_THEME/themes/$DEFAULT_THEME.conf" "$LOCAL_STATE/hypr_theme.conf"
+ln -sf "$AGS_PATH/themes/$DEFAULT_THEME.scss" "$LOCAL_STATE/ags_theme.scss"
+ln -sf "$AGS_PATH/assets/no_music/$DEFAULT_THEME.png" "$LOCAL_STATE/no_music"
 sed -i "s/^theme = .*/theme = $GHOSTTY_THEME/" "$GHOSTTY_PATH/config"
 sed -i 's/vim\.cmd("colorscheme [^"]*")/vim.cmd("colorscheme '$DEFAULT_THEME'")/' $NVIM_PATH/lua/jenci/init.lua

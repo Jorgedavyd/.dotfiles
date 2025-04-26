@@ -46,6 +46,8 @@ swww img "$LOCAL_STATE/current_wallpaper" \
 
 ln -sf "$AGS_PATH/assets/no_music/$theme.png" "$LOCAL_STATE/no_music"
 
+ln -sf "$AGS_PATH/themes/$theme.scss" "$LOCAL_STATE/ags_theme.scss"
+
 ln -sf "$HYPR_PATH/themes/$theme.conf" "$LOCAL_STATE/hypr_theme.conf"
 hyprctl reload
 
