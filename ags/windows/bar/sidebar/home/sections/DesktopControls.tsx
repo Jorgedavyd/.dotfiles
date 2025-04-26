@@ -43,46 +43,67 @@ function NetworkButton() {
       className='network_button'
       valign={Gtk.Align.CENTER}>
       {bind(network, 'primary').as(primary => (
-        <stack shown={primary.toString()}>
+        <stack shown={primary?.toString() ?? 'none'}>
           {/* Wired */}
           <box name={NetworkService.Primary.WIRED.toString()}>
-            <ButtonIcon
-              name='WIRED'
-              className='icon'
-              icon={bind(network.get_wired()!, 'state').as(state => {
-                switch (state) {
-                  case  NetworkService.DeviceState.ACTIVATED:
-                    return 'network-wired-symbolic'
-                  case  NetworkService.DeviceState.DISCONNECTED:
-                    return 'network-wired-disconnected-symbolic'
-                  case  NetworkService.DeviceState.UNKNOWN |
-                    NetworkService.DeviceState.UNAVAILABLE:
-                    return 'network-wired-no-route-symbolic'
-                  default:
-                    return 'network-wireless-offline-symbolic'
-                }
-              })}
-            />
+            {network.get_wired()
+              ? <ButtonIcon
+                  name='WIRED'
+                  className='icon'
+                  icon={bind(network.get_wired()!, 'state').as(state => {
+                    switch (state) {
+                      case NetworkService.DeviceState.ACTIVATED:
+                        return 'network-wired-symbolic'
+                      case NetworkService.DeviceState.DISCONNECTED:
+                        return 'network-wired-disconnected-symbolic'
+                      case NetworkService.DeviceState.UNKNOWN:
+                      case NetworkService.DeviceState.UNAVAILABLE:
+                        return 'network-wired-no-route-symbolic'
+                      default:
+                        return 'network-wireless-offline-symbolic'
+                    }
+                  })}
+                />
+              : <ButtonIcon
+                  name='WIRED'
+                  className='icon inactive'
+                  icon='network-wired-no-route-symbolic'
+                />}
           </box>
 
           {/* Wifi */}
           <box name={NetworkService.Primary.WIFI.toString()}>
+            {network.get_wifi()
+              ? <ButtonIcon
+                  name='WIFI'
+                  className='icon'
+                  icon={bind(network.get_wifi()!, 'state').as(state => {
+                    switch (state) {
+                      case NetworkService.DeviceState.ACTIVATED:
+                        return 'network-wireless-symbolic'
+                      case NetworkService.DeviceState.UNKNOWN:
+                      case NetworkService.DeviceState.UNAVAILABLE:
+                        return 'network-wireless-offline-symbolic'
+                      case NetworkService.DeviceState.DISCONNECTED:
+                        return 'network-wireless-no-route-symbolic'
+                      default:
+                        return 'network-wireless-offline-symbolic'
+                    }
+                  })}
+                />
+              : <ButtonIcon
+                  name='WIFI'
+                  className='icon inactive'
+                  icon='network-wireless-offline-symbolic'
+                />}
+          </box>
+
+          {/* No network */}
+          <box name='none'>
             <ButtonIcon
-              name='WIFI'
-              className='icon'
-              icon={bind(network.get_wifi()!, 'state').as(state => {
-                switch (state) {
-                  case  NetworkService.DeviceState.ACTIVATED:
-                    return 'network-wireless-symbolic'
-                  case  NetworkService.DeviceState.UNKNOWN |
-                    NetworkService.DeviceState.UNAVAILABLE:
-                    return 'network-wireless-offline-symbolic'
-                  case  NetworkService.DeviceState.DISCONNECTED:
-                    return 'network-wireless-no-route-symbolic'
-                  default:
-                    return 'network-wireless-offline-symbolic'
-                }
-              })}
+              name='NO NETWORK'
+              className='icon inactive'
+              icon='network-offline-symbolic'
             />
           </box>
         </stack>
