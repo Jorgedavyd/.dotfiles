@@ -1,0 +1,64 @@
+// catppuccin-frappe
+
+$bgh:       #303446;
+$bg:        #303446;
+$bg1:       #292c3c;
+$bg2:       #414559;
+
+$fgh:       #c6d0f5;
+$fg:        #c6d0f5;
+$fg1:       #c6d0f5;
+$fg2:       #b5bfe2;
+
+$red:       #e78284;
+$green:     #a6d189;
+$yellow:    #e5c890;
+$orange:    #ef9f76;
+$blue:      #8caaee;
+$purple:    #ca9ee6;
+$aqua:      #81c8be;
+$gray:      #737994;
+
+$primary: $blue;
+$secondary: $green;
+$border: $bg1;
+
+.bar {
+  border-right: solid $border 1.5px;
+
+  & .sections {
+    & .center {
+      & .workspace {
+        & .button {
+          &.active {
+            background-color: $primary;
+          }
+        }
+      }
+    }
+  }
+}
+
+.sidebar_home {
+  & .music_player {
+    & .right {
+      & .meta {
+        & .artist {
+          color: $primary;
+        }
+      }
+    }
+  }
+
+  & .notification_center {
+    & .notifications {
+      & .notification {
+        & .meta {
+          & .appname {
+            color: $primary;
+          }
+        }
+      }
+    }
+  }
+}

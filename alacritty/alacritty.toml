@@ -11,10 +11,10 @@ decorations_theme_variant = "Dark"
 TERM = "xterm-256color"
 
 [font]
-normal.family = "CaskaydiaCove Nerd Font"
-bold.family = "CaskaydiaCove Nerd Font"
-italic.family = "CaskaydiaCove Nerd Font"
-bold_italic.family = "CaskaydiaCove Nerd Font"
+normal.family = "JetBrains Mono Nerd Font"
+bold.family = "JetBrains Mono Nerd Font"
+italic.family = "JetBrains Mono Nerd Font"
+bold_italic.family = "JetBrains Mono Nerd Font"
 size = 18
 
 [general]

@@ -1,0 +1,67 @@
+// Rose pine moon
+// Backgrounds
+$bgh:       #232136;  // Rosé Pine Moon 'base' - primary dark background
+$bg:        #0d1011;  // Your original dark base, slightly darker than Rosé Pine
+$bg1:       #0d1011;  // Matching your scheme’s consistency
+$bg2:       #2a273f;  // Rosé Pine Moon 'surface' - subtle step up
+$bg3:       #393552;  // Rosé Pine Moon 'overlay' - mid-tone background
+
+// Foregrounds
+$fgh:       #e0def4;  // Rosé Pine Moon 'text' - soft, readable off-white
+$fg:        #e0def4;  // Matching fgh for consistency
+$fg1:       #e0def4;  // Keeping uniformity with your scheme
+$fg2:       #c4a7e7;  // Rosé Pine Moon 'iris' - slightly muted purple for variation
+
+// Base Colors
+$red:       #eb6f92;  // Rosé Pine Moon 'love' - softer than your #C4746E
+$green:     #9ccfd8;  // Rosé Pine Moon 'foam' - aqua instead of your earthy #8A9A7B
+$yellow:    #f6c177;  // Rosé Pine Moon 'gold' - warmer than your #C4B28A
+$magenta:   #ea9a97;  // Rosé Pine Moon 'rose' - pinkish, distinct from your #A292A3
+$blue:      #3e8fb0;  // Rosé Pine Moon 'pine' - cooler than your #8BA4B0
+$purple:    #c4a7e7;  // Rosé Pine Moon 'iris' - aligns with your #957FB8 vibe
+$aqua:      #3e8fb0;  // Rosé Pine Moon 'pine' - teal instead of your #6A9589
+$gray:      #59546d;  // Rosé Pine Moon 'muted' - cooler than your #727169
+
+$primary:   $magenta;    // #3e8fb0 (Rosé Pine 'rose')
+$secondary: $blue;  // #f6c177 (Rosé Pine 'pine')
+$border:    $bg3;     // #393552 (Rosé Pine 'overlay')
+
+.bar {
+  border-right: solid $border 1.5px;
+
+  & .sections {
+    & .center {
+      & .workspace {
+        & .button {
+          &.active {
+            background-color: $primary;
+          }
+        }
+      }
+    }
+  }
+}
+
+.sidebar_home {
+  & .music_player {
+    & .right {
+      & .meta {
+        & .artist {
+          color: $primary;
+        }
+      }
+    }
+  }
+
+  & .notification_center {
+    & .notifications {
+      & .notification {
+        & .meta {
+          & .appname {
+            color: $primary;
+          }
+        }
+      }
+    }
+  }
+}

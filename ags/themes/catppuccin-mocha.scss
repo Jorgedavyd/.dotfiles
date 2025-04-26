@@ -1,0 +1,64 @@
+// catppuccin-mocha
+
+$bgh:       #1e1e2e;
+$bg:        #1e1e2e;
+$bg1:       #181825;
+$bg2:       #313244;
+
+$fgh:       #cdd6f4;
+$fg:        #cdd6f4;
+$fg1:       #cdd6f4;
+$fg2:       #bac2de;
+
+$red:       #f38ba8;
+$green:     #a6e3a1;
+$yellow:    #f9e2af;
+$orange:    #fab387;
+$blue:      #89b4fa;
+$purple:    #cba6f7;
+$aqua:      #94e2d5;
+$gray:      #6c7086;
+
+$primary: $blue;
+$secondary: $green;
+$border: $bg1;
+
+.bar {
+  border-right: solid $border 1.5px;
+
+  & .sections {
+    & .center {
+      & .workspace {
+        & .button {
+          &.active {
+            background-color: $primary;
+          }
+        }
+      }
+    }
+  }
+}
+
+.sidebar_home {
+  & .music_player {
+    & .right {
+      & .meta {
+        & .artist {
+          color: $primary;
+        }
+      }
+    }
+  }
+
+  & .notification_center {
+    & .notifications {
+      & .notification {
+        & .meta {
+          & .appname {
+            color: $primary;
+          }
+        }
+      }
+    }
+  }
+}

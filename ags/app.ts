@@ -5,8 +5,8 @@ import './globals'
 import { App } from 'astal/gtk3'
 import { compileScss } from './cssHotReload'
 
-import StatusLine from '@windows/statusline/StatusLine'
-import FileExplorer from '@windows/file_explorer/FileExplorer'
+import Bar from '@windows/bar/Bar'
+import NotificationPopups from '@windows/notificationPopups/NotificationPopups'
 
 import requestHandler from './requestHandler'
 
@@ -15,8 +15,8 @@ App.start({
   main() {
     const mainMonitor = App.get_monitors().at(0)!
 
-    StatusLine(mainMonitor)
-    FileExplorer(mainMonitor)
+    Bar(mainMonitor)
+    NotificationPopups(mainMonitor)
   },
   requestHandler
 })

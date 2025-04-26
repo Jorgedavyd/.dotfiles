@@ -1,75 +1,45 @@
-import { statusLineMode } from '@windows/statusline/vars'
-import { revealFileExplorer } from '@windows/file_explorer/vars'
+import { revealSideBar, sideBarShown } from './windows/bar/sidebar/vars'
 
-function handleStatusLine(args: string[]): string {
-  const [command, mode] = args
+function handleSideBar(request: string[]): string {
+  const [state, shown] = request
 
-  if (!command) return `err [msg="'command' is required."]`
-  if (!mode) return `err [msg="'mode' is required."]`
+  if (!state) return `err [msg="'state' is required"]`
+  if (!shown) return `err [msg="'shown' is required"]`
 
-  if (command === 'toggle') {
-    switch (mode) {
-      case 'normal': return `err [msg="cannot toggle normal mode."]`
+  if (state === 'toggle') {
+    switch (shown) {
+      case 'home':
+        revealSideBar.set(!revealSideBar.get())
+        return `ok [cmd="toggle",state=${revealSideBar.get()},shown="${sideBarShown.get()}"]`
       case 'appLauncher':
-        statusLineMode.set(
-          statusLineMode.get() === 'appLauncher'
-            ? 'normal'
-            : 'appLauncher'
-        )
-        return `ok [cmd="toggle",mode="${statusLineMode.get()}"]`
-      case 'command':
-        statusLineMode.set(
-          statusLineMode.get() === 'command'
-            ? 'normal'
-            : 'command'
-        )
-        return `ok [cmd="toggle",mode="${statusLineMode.get()}"]`
       case 'wallpapers':
-        statusLineMode.set(
-          statusLineMode.get() === 'wallpapers'
-            ? 'normal'
-            : 'wallpapers'
-        )
-        return `ok [cmd="toggle",mode="${statusLineMode.get()}"]`
-      default:
-        return `err [msg="Unknown args for toggle statusline."]`
+        if (!revealSideBar.get()) revealSideBar.set(true)
+
+        sideBarShown.set(sideBarShown.get() === shown ? 'home' : shown)
+        return `ok [cmd="toggle",state=${revealSideBar.get()},shown="${sideBarShown.get()}"]`
     }
   }
 
-  return `err [msg="Unknown args for statusline."]`
-}
+  if (state === 'open') {
+    sideBarShown.set(shown)
+    revealSideBar.set(true)
 
-function handleFileExplorer(args: string[]): string {
-  const [command] = args
-
-  if (!command) return `err [msg="'command' is required."]`
-
-  switch(command) {
-    case 'open':
-      revealFileExplorer.set(true)
-      return `ok [state=true']`
-    case 'close':
-      revealFileExplorer.set(false)
-      return `ok [state=false']`
-    case 'toggle':
-      revealFileExplorer.set(
-        !revealFileExplorer.get()
-      )
-      return `ok [state=${revealFileExplorer.get()}]`
-    default:
-      return `err [msg="Uknown args for sidebar."]`
+    return `ok [cmd="open",state=${revealSideBar.get()},shown="${sideBarShown.get()}"]`
   }
+
+  if (state === 'close') {
+    sideBarShown.set('home')
+    revealSideBar.set(false)
+
+    return `ok [cmd="close",state=${revealSideBar.get()}]`
+  }
+
+  return 'err [msg="unknown request"]'
 }
 
 export default function requestHandler(request: string, res: (response: any) => void) {
-  const args = request.split(':')
-
-  switch (args[0]) {
-    case 'statusline':
-      return res(handleStatusLine(args.slice(1)))
-    case 'file_explorer':
-      return res(handleFileExplorer(args.slice(1)))
-    default:
-      return res('Unknown request.')
+  if (request.startsWith('sidebar')) {
+    const result = handleSideBar(request.split(':').slice(-2))
+    return res(result)
   }
 }

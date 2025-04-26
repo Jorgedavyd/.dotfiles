@@ -1,0 +1,64 @@
+// catppuccin-macchiato
+
+$bgh:       #24273a;
+$bg:        #24273a;
+$bg1:       #1e2030;
+$bg2:       #363a4f;
+
+$fgh:       #cad3f5;
+$fg:        #cad3f5;
+$fg1:       #cad3f5;
+$fg2:       #b8c0e0;
+
+$red:       #ed8796;
+$green:     #a6da95;
+$yellow:    #eed49f;
+$orange:    #f5a97f;
+$blue:      #8aadf4;
+$purple:    #c6a0f6;
+$aqua:      #8bd5ca;
+$gray:      #6e738d;
+
+$primary: $blue;
+$secondary: $green;
+$border: $bg1;
+
+.bar {
+  border-right: solid $border 1.5px;
+
+  & .sections {
+    & .center {
+      & .workspace {
+        & .button {
+          &.active {
+            background-color: $primary;
+          }
+        }
+      }
+    }
+  }
+}
+
+.sidebar_home {
+  & .music_player {
+    & .right {
+      & .meta {
+        & .artist {
+          color: $primary;
+        }
+      }
+    }
+  }
+
+  & .notification_center {
+    & .notifications {
+      & .notification {
+        & .meta {
+          & .appname {
+            color: $primary;
+          }
+        }
+      }
+    }
+  }
+}

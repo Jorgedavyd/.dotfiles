@@ -1,0 +1,64 @@
+// kanagawa-wave
+
+$bgh:       #1f1f28;
+$bg:        #1f1f28;
+$bg1:       #2a2a37;
+$bg2:       #223249;
+
+$fgh:       #dcd7ba;
+$fg:        #dcd7ba;
+$fg1:       #dcd7ba;
+$fg2:       #c8c093;
+
+$red:       #e46876;
+$green:     #98bb6c;
+$yellow:    #dca561;
+$orange:    #ffa066;
+$blue:      #7fb4ca;
+$purple:    #957fb8;
+$aqua:      #7aa89f;
+$gray:      #727169;
+
+$primary: $blue;
+$secondary: $green;
+$border: $bg1;
+
+.bar {
+  border-right: solid $border 1.5px;
+
+  & .sections {
+    & .center {
+      & .workspace {
+        & .button {
+          &.active {
+            background-color: $primary;
+          }
+        }
+      }
+    }
+  }
+}
+
+.sidebar_home {
+  & .music_player {
+    & .right {
+      & .meta {
+        & .artist {
+          color: $primary;
+        }
+      }
+    }
+  }
+
+  & .notification_center {
+    & .notifications {
+      & .notification {
+        & .meta {
+          & .appname {
+            color: $primary;
+          }
+        }
+      }
+    }
+  }
+}
