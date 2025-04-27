@@ -1,30 +1,28 @@
 // Rose pine moon
-// Backgrounds
-$bgh:       #232136;  // Rosé Pine Moon 'base' - primary dark background
-$bg:        #0d1011;  // Your original dark base, slightly darker than Rosé Pine
-$bg1:       #0d1011;  // Matching your scheme’s consistency
-$bg2:       #2a273f;  // Rosé Pine Moon 'surface' - subtle step up
 
-// Foregrounds
-$fgh:       #e0def4;  // Rosé Pine Moon 'text' - soft, readable off-white
-$fg:        #e0def4;  // Matching fgh for consistency
-$fg1:       #e0def4;  // Keeping uniformity with your scheme
-$fg2:       #c4a7e7;  // Rosé Pine Moon 'iris' - slightly muted purple for variation
+$bgh:       #232136;
+$bg:        #0d1011;
+$bg1:       #0d1011;
+$bg2:       #2a273f;
 
-// Base Colors
-$red:       #eb6f92;  // Rosé Pine Moon 'love' - softer than your #C4746E
-$green:     #9ccfd8;  // Rosé Pine Moon 'foam' - aqua instead of your earthy #8A9A7B
-$yellow:    #f6c177;  // Rosé Pine Moon 'gold' - warmer than your #C4B28A
-$orange:    #ea9a97;  // Rosé Pine Moon 'rose' - pinkish, distinct from your #A292A3
-$blue:      #3e8fb0;  // Rosé Pine Moon 'pine' - cooler than your #8BA4B0
-$purple:    #c4a7e7;  // Rosé Pine Moon 'iris' - aligns with your #957FB8 vibe
-$aqua:      #3e8fb0;  // Rosé Pine Moon 'pine' - teal instead of your #6A9589
-$gray:      #59546d;  // Rosé Pine Moon 'muted' - cooler than your #727169
+$fgh:       #e0def4;
+$fg:        #e0def4;
+$fg1:       #e0def4;
+$fg2:       #c4a7e7;
+
+$red:       #eb6f92;
+$green:     #9ccfd8;
+$yellow:    #f6c177;
+$orange:    #ea9a97;
+$blue:      #3e8fb0;
+$purple:    #c4a7e7;
+$aqua:      #3e8fb0;
+$gray:      #59546d;
 
 
-$primary:   $orange;    // #3e8fb0 (Rosé Pine 'rose')
-$secondary: $blue;  // #f6c177 (Rosé Pine 'pine')
-$border:    $bg1;     // #393552 (Rosé Pine 'overlay')
+$primary:   $orange;
+$secondary: $blue;
+$border:    $bg1;
 
 .bar {
   border-right: solid $border 1.5px;
