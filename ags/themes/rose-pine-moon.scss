@@ -4,7 +4,6 @@ $bgh:       #232136;  // Rosé Pine Moon 'base' - primary dark background
 $bg:        #0d1011;  // Your original dark base, slightly darker than Rosé Pine
 $bg1:       #0d1011;  // Matching your scheme’s consistency
 $bg2:       #2a273f;  // Rosé Pine Moon 'surface' - subtle step up
-$bg3:       #393552;  // Rosé Pine Moon 'overlay' - mid-tone background
 
 // Foregrounds
 $fgh:       #e0def4;  // Rosé Pine Moon 'text' - soft, readable off-white
@@ -24,7 +23,7 @@ $gray:      #59546d;  // Rosé Pine Moon 'muted' - cooler than your #727169
 
 $primary:   $magenta;    // #3e8fb0 (Rosé Pine 'rose')
 $secondary: $blue;  // #f6c177 (Rosé Pine 'pine')
-$border:    $bg3;     // #393552 (Rosé Pine 'overlay')
+$border:    $bg1;     // #393552 (Rosé Pine 'overlay')
 
 .bar {
   border-right: solid $border 1.5px;
