@@ -18,9 +18,9 @@ case $theme in
     "oxocarbon")       GHOSTTY_THEME="Oxocarbon" ; OBSIDIAN_THEME="Default" ;;
     "gruvbox")         GHOSTTY_THEME="GruvboxDark" ; OBSIDIAN_THEME="Obsidian gruvbox" ;;
     "nord")            GHOSTTY_THEME="nord" ; OBSIDIAN_THEME="Obsidian Nord" ;;
-    "catppuccin-frappe")    GHOSTTY_THEME="catppuccin-frappe" ; OBSIDIAN_THEME="catppuccin" ;;
-    "catppuccin-mocha")     GHOSTTY_THEME="catppuccin-mocha" ; OBSIDIAN_THEME="catppuccin" ;;
-    "catppuccin-macchiato") GHOSTTY_THEME="catppuccin-macchiato" ; OBSIDIAN_THEME="catppuccin" ;;
+    "catppuccin-frappe")    GHOSTTY_THEME="catppuccin-frappe" ; OBSIDIAN_THEME="Catppuccin" ;;
+    "catppuccin-mocha")     GHOSTTY_THEME="catppuccin-mocha" ; OBSIDIAN_THEME="Catppuccin" ;;
+    "catppuccin-macchiato") GHOSTTY_THEME="catppuccin-macchiato" ; OBSIDIAN_THEME="Catppuccin" ;;
     "rose-pine-moon")       GHOSTTY_THEME="rose-pine-moon" ; OBSIDIAN_THEME="Rose Pine" ;;
     *) exit 1 ;;
 esac
