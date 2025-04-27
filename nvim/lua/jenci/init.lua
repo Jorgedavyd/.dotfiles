@@ -64,7 +64,7 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.g.netrw_browse_split = 0
 vim.g.netrw_banner = 0
 vim.g.netrw_winsize = 25
-vim.cmd("colorscheme rose-pine-moon")
+vim.cmd("colorscheme oxocarbon")
 vim.o.background = "dark"
 local server_path = "/tmp/nvim-" .. tostring(vim.fn.getpid())
 vim.fn.serverstart(server_path)
