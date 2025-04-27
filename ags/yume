@@ -2815,7 +2815,7 @@ function Wallpapers() {
           cursor: "pointer",
           onClick: () => {
             exec(`ln -sf ${wallpaper} ${LOCAL_STATE}/current_wallpaper`);
-            execAsync(`swww img ${LOCAL_STATE}/current_wallpaper --transition-type "wipe" --transition-duration 3`);
+            execAsync(`swww img ${LOCAL_STATE}/current_wallpaper --transition-type "wipe" --transition-duration 1`);
             execAsync(`rm -rf ${HOME_DIR}/.cache/fastfetch/images`);
             execAsync(`magick ${wallpaper} -gravity Center -crop 1:1 -resize 500x500 +repage ${LOCAL_STATE}/current_wallpaper.crop`);
             sideBarShown.set("home");

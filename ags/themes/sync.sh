@@ -49,7 +49,7 @@ magick "$LOCAL_STATE/current_wallpaper" \
 
 swww img "$LOCAL_STATE/current_wallpaper" \
     --transition-type "wipe" \
-    --transition-duration 3
+    --transition-duration 1
 
 ln -sf "$AGS_PATH/assets/no_music/$theme.png" "$LOCAL_STATE/no_music"
 
