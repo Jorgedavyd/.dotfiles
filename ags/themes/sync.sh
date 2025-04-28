@@ -22,6 +22,7 @@ case $theme in
     "catppuccin-mocha")     GHOSTTY_THEME="catppuccin-mocha" ; OBSIDIAN_THEME="Catppuccin" ;;
     "catppuccin-macchiato") GHOSTTY_THEME="catppuccin-macchiato" ; OBSIDIAN_THEME="Catppuccin" ;;
     "rose-pine-moon")       GHOSTTY_THEME="rose-pine-moon" ; OBSIDIAN_THEME="Rose Pine" ;;
+    "rose-pine")       GHOSTTY_THEME="rose-pine" ; OBSIDIAN_THEME="Rose Pine" ;;
     *) exit 1 ;;
 esac
 
