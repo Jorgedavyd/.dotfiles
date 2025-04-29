@@ -12,12 +12,6 @@ function R(name)
     require("plenary.reload").reload_module(name)
 end
 
-vim.filetype.add({
-    extension = {
-        templ = 'templ',
-    }
-})
-
 autocmd('TextYankPost', {
     group = yank_group,
     pattern = '*',
@@ -64,8 +58,9 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.g.netrw_browse_split = 0
 vim.g.netrw_banner = 0
 vim.g.netrw_winsize = 25
-vim.cmd("colorscheme oxocarbon")
-vim.o.background = "dark"
+-- Sets up the correct theme, placeholder for sync.sh
+vim.cmd("colorscheme rose-pine")
+-- Creates a socket window for the sync.sh script
 local server_path = "/tmp/nvim-" .. tostring(vim.fn.getpid())
 vim.fn.serverstart(server_path)
 vim.g.nvim_server_path = server_path
