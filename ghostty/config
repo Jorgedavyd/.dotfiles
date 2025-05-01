@@ -1,4 +1,4 @@
-theme = Oxocarbon
+theme = rose-pine
 shell-integration = bash
 
 font-family = "Liga SFMono Nerd Font"
@@ -7,3 +7,4 @@ font-size = 20
 
 background-opacity = 1
 window-padding-y = 10,0
+fullscreen = true

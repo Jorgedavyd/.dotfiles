@@ -5,6 +5,22 @@ return {
         "nvim-lua/plenary.nvim"
     },
 
+    keys = {
+        { "<leader>pf" , require("telescope.builtin").find_files, {} },
+        { "<C-p>" , require("telescope.builtin").git_files, {} },
+        { "<leader>w" , require("telescope.builtin").colorscheme, {} },
+        { "<leader>pws" , function()
+            require("telescope.builtin").grep_string({ search = vim.fn.expand("<cword>") })
+        end },
+        { "<leader>pWs" , function()
+            require("telescope.builtin").grep_string({ search = vim.fn.expand("<cWORD>") })
+        end },
+        { "<leader>ps" , function()
+            require("telescope.builtin").grep_string({ search = vim.fn.input("Grep > ") })
+        end },
+        { "<leader>vh" , require("telescope.builtin").help_tags, {} },
+    },
+
     config = function()
         require('telescope').setup({
             defaults = {
@@ -28,23 +44,6 @@ return {
                 }
             }
         })
-
-        local builtin = require('telescope.builtin')
-        local map = vim.keymap.set
-
-        map('n', '<leader>pf', builtin.find_files, {})
-        map('n', '<C-p>', builtin.git_files, {})
-        map('n', '<leader>w', builtin.colorscheme, {})
-        map('n', '<leader>pws', function()
-            builtin.grep_string({ search = vim.fn.expand("<cword>") })
-        end)
-        map('n', '<leader>pWs', function()
-            builtin.grep_string({ search = vim.fn.expand("<cWORD>") })
-        end)
-        map('n', '<leader>ps', function()
-            builtin.grep_string({ search = vim.fn.input("Grep > ") })
-        end)
-        map('n', '<leader>vh', builtin.help_tags, {})
     end
 }
 

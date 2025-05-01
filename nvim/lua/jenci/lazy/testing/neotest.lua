@@ -3,17 +3,15 @@ local path = vim.fn.expand("%")
 return {
     "nvim-neotest/neotest",
     dependencies = {
-        'mfussenegger/nvim-dap',
+        "mfussenegger/nvim-dap",
         "nvim-neotest/nvim-nio",
         "nvim-lua/plenary.nvim",
-        "antoinemadec/FixCursorHold.nvim",
+        "marilari88/neotest-vitest",
+        "nvim-neotest/neotest-plenary",
         "nvim-neotest/neotest-python",
         "mrcjkb/rustaceanvim",
-        "nvim-neotest/neotest-plenary",
-        "marilari88/neotest-vitest",
         "lawrence-laz/neotest-zig",
         "alfaix/neotest-gtest",
-        "mrcjkb/neotest-haskell",
         "nvim-treesitter/nvim-treesitter"
     },
     config = function()
@@ -28,8 +26,7 @@ return {
                 }),
                 require("rustaceanvim.neotest"),
                 require("neotest-zig"),
-                require("neotest-gtest"),
-                require("neotest-haskell"),
+                require("neotest-gtest").setup({}),
             },
             discovery = {
                 filter_dir = function(name, rel_path, root)

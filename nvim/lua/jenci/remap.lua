@@ -15,7 +15,7 @@ vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 -- Tmux and lazygit integrations
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>") -- (PrimeAgen)
-vim.keymap.set("n", "<leader>ga", "<cmd>silent !tmux neww actions<CR>")
+vim.keymap.set("n", "<leader>gh", "<cmd>silent !tmux neww actions<CR>")
 -- Search and change current word (PrimeAgen)
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 vim.keymap.set("v", "<leader>s", [[y:%s/<C-r>"/<C-r>"/gI<Left><Left><Left>]])
