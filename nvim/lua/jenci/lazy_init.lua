@@ -12,14 +12,8 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-    spec = {
-        { import = "jenci.lazy" },
-        { import = "jenci.lazy.completion" },
-        { import = "jenci.lazy.lsp" },
-        { import = "jenci.lazy.motion" },
-        { import = "jenci.lazy.testing" },
-        { import = "jenci.lazy.ui" },
-        { import = "jenci.lazy.ui.themes" },
-    },
+    spec = vim.tbl_map(function (value)
+        return { import = "jenci.lazy" .. value }
+    end, { "", ".completion", ".lsp", ".motion", ".testing", ".ui", ".ui.themes" }),
     change_detection = { notify = false }
 })
