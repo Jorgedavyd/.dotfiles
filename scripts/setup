@@ -27,14 +27,6 @@ installSwww() {
     sudo mv target/release/swww-daemon /usr/local/bin
 };
 
-installCava() {
-    git clone https://github.com/karlstav/cava.git $HOME/builds && cd $HOME/builds/cava
-    ./autogen.sh
-    ./configure --prefix=/usr/local
-    make
-    sudo make install
-};
-
 installDependencies() {
     if [[ "$OSTYPE" == "linux-gnu"* ]]; then
         if command -v apt-get &> /dev/null; then
@@ -46,10 +38,6 @@ installDependencies() {
             sudo add-apt-repository -y ppa:neovim-ppa/stable ## for nvim
             ## install the per-repo programs
             sudo apt-get install -y python3 ripgrep curl wget tmux sed hyprland neovim neofetch go
-            ## requirements of alacritty
-            sudo apt-get install -y cmake g++ pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev
-            ## requirements of cava
-            sudo apt-get install -y build-essential libfftw3-dev libasound2-dev libpulse-dev libtool automake libiniparser-dev libsdl2-2.0-0 libsdl2-dev libpipewire-0.3-dev libjack-jackd2-dev pkgconf
             ## requirements for swww
             sudo apt-get update && sudo apt-get install -y python3 python3-pip
             pip install meson
@@ -57,8 +45,6 @@ installDependencies() {
             sudo apt-get update && sudo apt-get upgrade -y
         elif command -v pacman &> /dev/null; then
             sudo pacman -Syu --noconfirm ripgrep fzf tmux neovim sed go hyrpland
-            ## requirements of cava
-            sudo pacman -Syu --noconfirm cmake freetype2 fontconfig pkg-config make libxcb libxkbcommon python
             ## requirements for swww
             sudo pacman -Syu --noconfirm python python-pip
         else
@@ -67,8 +53,6 @@ installDependencies() {
         fi
         installAGS
         installSwww
-        installCava
-        installSwaylock
 
     else
         echo "Operating system not supported."
@@ -77,35 +61,27 @@ installDependencies() {
 };
 
 link_dotfiles() {
-  mkdir -p "$HOME/.config"
-  ln -sf "$DOTFILES_DIR/zsh/.zshrc" "$HOME"
-  ln -sf "$DOTFILES_DIR/bash/.bashrc" "$HOME"
-  ln -sf "$DOTFILES_DIR/bash/.bash_profile" "$HOME"
-  ln -sf "$DOTFILES_DIR/nvim" "$HOME/.config/"
-  ln -sf "$DOTFILES_DIR/alacritty" "$HOME/.config/"
-  ln -sf "$DOTFILES_DIR/ghostty" "$HOME/.config/"
-  ln -sf "$DOTFILES_DIR/tmux" "$HOME/.config/"
-  ln -sf "$DOTFILES_DIR/i3" "$HOME/.config/"
-  ln -sf "$DOTFILES_DIR/scripts" "$HOME/.local/"
-  ln -sf "$DOTFILES_DIR/hypr" "$HOME/.config/"
-  ln -sf "$DOTFILES_DIR/neofetch" "$HOME/.config/"
-  ln -sf "$DOTFILES_DIR/swaylock" "$HOME/.config/"
-  ln -sf "$DOTFILES_DIR/swww" "$HOME/.config/"
-  ln -sf "$DOTFILES_DIR/ags" "$HOME/.config/"
-  ln -sf "$DOTFILES_DIR/cava" "$HOME/.config/"
-  ln -sf "$DOTFILES_DIR/zathura" "$HOME/.config/"
-  ln -sf "$DOTFILES_DIR/.xinitrc" "$HOME/"
-  ln -sf "$DOTFILES_DIR/fonts" "$HOME/.local/share/"
-  ln -s "$DOTFILES_DIR/zsh/lambda-dragon.zsh-theme" "$HOME/.oh-my-zsh/custom/themes/"
+    mkdir -p "$HOME/.config"
+    ln -sf "$DOTFILES_DIR/bash/.bashrc" "$HOME"
+    ln -sf "$DOTFILES_DIR/bash/.bash_profile" "$HOME"
+    ln -sf "$DOTFILES_DIR/nvim" "$HOME/.config/"
+    ln -sf "$DOTFILES_DIR/ghostty" "$HOME/.config/"
+    ln -sf "$DOTFILES_DIR/tmux" "$HOME/.config/"
+    ln -sf "$DOTFILES_DIR/scripts" "$HOME/.local/"
+    ln -sf "$DOTFILES_DIR/hypr" "$HOME/.config/"
+    ln -sf "$DOTFILES_DIR/neofetch" "$HOME/.config/"
+    ln -sf "$DOTFILES_DIR/swww" "$HOME/.config/"
+    ln -sf "$DOTFILES_DIR/ags" "$HOME/.config/"
+    ln -sf "$DOTFILES_DIR/zathura" "$HOME/.config/"
+    ln -sf "$DOTFILES_DIR/fonts" "$HOME/.local/share/"
 };
 
 main() {
-  installDependencies
-  git clone "$DOTFILES_REPO" "$DOTFILES_DIR" || { echo "Failed to clone dotfiles repo."; exit 1; }
-  chmod +x "$DOTFILES_DIR/scripts/*"
-  chmod +x "$HOME/.xinitrc"
-  link_dotfiles
-  installBashEnv
+    installDependencies
+    git clone "$DOTFILES_REPO" "$DOTFILES_DIR" || { echo "Failed to clone dotfiles repo."; exit 1; }
+    chmod +x "$DOTFILES_DIR/scripts/*"
+    link_dotfiles
+    installBashEnv
 }
 
 main

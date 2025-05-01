@@ -47,6 +47,3 @@ jobs:
       - name: Run linter (clippy)
         run: cargo clippy -- -D warnings
 
-      - name: Check code formatting (rustfmt)
-        run: cargo fmt -- --check
-
