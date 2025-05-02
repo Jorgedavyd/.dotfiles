@@ -51,7 +51,7 @@ return {
 
             handlers = {
                 function(server_name)
-                    if server_name ~= 'jdtls' and server_name ~= 'rust_analyzer' then
+                    if server_name ~= 'jdtls' and server_name ~= 'rust_analyzer' then -- managed in ftplugins
                         require("lspconfig")[server_name].setup {
                             capabilities = capabilities
                         }
@@ -104,7 +104,7 @@ return {
                         settings = {
                             clangd = {
                                 fallbackFlags = {
-                                    "--std=c++20",
+                                    "--std=c++17",
                                     "--cuda-path=/opt/cuda",
                                     "--cuda-gpu-arch=sm_89",
                                     "-L/opt/cuda/lib",
@@ -130,27 +130,6 @@ return {
                         }
                     })
                 end,
-
-                yamlls = function ()
-                    local lspconfig = require("lspconfig")
-                    lspconfig.yamlls.setup({
-                        settings = {
-                            yaml = {
-                                schemas = {
-                                    ["kubernetes"] = "*.yaml",  -- Kubernetes manifests
-                                    ["https://raw.githubusercontent.com/SchemaStore/schemastore/refs/heads/master/src/schemas/json/github-workflow.json"] = ".github/workflows/*",  -- GitHub Workflows
-                                    ["https://raw.githubusercontent.com/SchemaStore/schemastore/refs/heads/master/src/schemas/json/github-action.json"] = ".github/action.{yml,yaml}",  -- GitHub Actions
-                                    ["http://json.schemastore.org/chart"] = "Chart.{yml,yaml}",  -- Helm Charts
-                                    ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "*docker-compose*.{yml,yaml}",  -- Docker Compose
-                                    ["https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json"] = "*flow*.{yml,yaml}",  -- Argo Workflows
-                                },
-                                validate = true,
-                                hover = true,
-                                completion = true
-                            }
-                        }
-                    })
-                end
             }
         })
 

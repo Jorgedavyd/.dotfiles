@@ -69,7 +69,5 @@ return {
         dap.configurations.zig = dap.configurations.cpp
         dap.configurations.cuda = dap.configurations.cpp
         dap.configurations.rust = dap.configurations.cpp
-
-        require('dap-go').setup()
     end,
 }

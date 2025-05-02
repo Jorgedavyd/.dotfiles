@@ -14,7 +14,7 @@ return {
                 "rego"
             },
             sync_install = false,
-            auto_install = true,
+            auto_install = false,
             indent = {
                 enable = true
             },
@@ -22,7 +22,7 @@ return {
                 enable = true,
                 disable = {"latex"},
                 additional_vim_regex_highlighting = false,
-            },
+            }
         })
     end
 }
